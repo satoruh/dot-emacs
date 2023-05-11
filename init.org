@@ -718,6 +718,35 @@ markがactiveなとき（リージョンがハイライトされているとき�
     )
 #+end_src
 
+** treemacs
+
+#+begin_src emacs-lisp
+  (use-package treemacs
+    :bind (nil
+           ("M-0" . treemacs-select-window)
+           )
+    :custom
+    (treemacs-collapse-dirs 3)
+    (treemacs-filewatch-mode t)
+    (treemacs-follow-mode t)
+    (treemacs-fringe-indicator-mode always)
+    (treemacs-git-commit-diff-mode t)
+    (treemacs-git-mode t)
+    (treemacs-is-never-other-window t)
+    (treemacs-missing-project-action 'keep)
+    :hook
+    (treemacs-mode . (lambda () (display-line-numbers-mode -1))))
+
+  (use-package treemacs-all-the-icons
+    :after treemacs
+    :init
+    (treemacs-load-theme "all-the-icons")
+    )
+
+  (use-package treemacs-tab-bar
+    :after treemacs)
+#+end_src
+
 ** volatile-highlights
 
 #+begin_src emacs-lisp
