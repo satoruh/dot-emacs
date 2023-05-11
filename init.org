@@ -3,6 +3,19 @@
 
 * Setup
 
+** profiler
+
+#+begin_src emacs-lisp
+   (defconst my/enable-profile t)
+
+   (when my/enable-profile
+     (require 'profiler)
+     (profiler-start 'cpu+mem)
+     (add-hook 'after-init-hook #'(lambda ()
+                                    (profiler-report)
+                                    (profiler-stop))))
+#+end_src
+
 ** use-package
 
 #+begin_src emacs-lisp
