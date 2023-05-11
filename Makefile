@@ -1,6 +1,6 @@
 # -*- mode: makefile-gmake -*-
 
-EMACS = emacs
+EMACS = ~/Applications/Emacs.app/Contents/MacOS/Emacs
 
 .DEFAULT: byte-compile
 
