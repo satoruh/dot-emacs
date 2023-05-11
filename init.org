@@ -1,0 +1,668 @@
+#+TITLE: init.org
+#+STARTUP: show5levels
+
+* Setup
+
+** use-package
+
+#+begin_src emacs-lisp
+  (eval-and-compile
+    (custom-set-variables '(package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
+                                               ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                                               ("melpa" . "https://melpa.org/packages/")))))
+
+  (eval-when-compile
+    (require 'use-package)
+    (setq use-package-always-ensure t))
+  (require 'bind-key)
+
+  (eval-when-compile
+    (package-refresh-contents)
+    (package-initialize)
+    (package-upgrade-all))
+#+end_src
+
+* My Functions
+
+** user-data-directory
+
+#+begin_src emacs-lisp
+  (defconst my/user-data-directory
+    (expand-file-name "~/.local/share/emacs/"))
+
+  (defun my/user-data (name)
+    (expand-file-name name my/user-data-directory))
+#+end_src
+
+** kill-region か backward-kill-word する
+
+markがactiveなとき（リージョンがハイライトされているとき）はkill-region、そうでないときはbackward-kill-wordする
+
+#+begin_src emacs-lisp
+  (defun my/kill-region-or-backward-kill-word (&optional arg)
+    (interactive "p")
+    (if (region-active-p)
+        (call-interactively #'kill-region)
+      (backward-kill-word arg)))
+#+end_src
+
+* General
+
+** Coding system
+
+#+begin_src emacs-lisp
+  (set-language-environment "Japanese")
+
+  (set-default-coding-systems 'utf-8-unix)
+  (prefer-coding-system 'utf-8-unix)
+  (set-selection-coding-system 'utf-8-unix)
+#+end_src
+
+** exec-path
+
+#+begin_src emacs-lisp
+  (use-package exec-path-from-shell
+    :ensure t
+    :init
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
+#+end_src
+
+** Frames and display settings
+*** startup
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(inhibit-startup-screen t)
+   '(inhibit-startup-echo-area-message t)
+   '(initial-scratch-message nil)
+   '(initial-major-mode 'org-mode))
+#+end_src
+
+*** スクロールバーなどを表示しない
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(scroll-bar-mode nil)
+   '(horizontal-scroll-bar-mode nil)
+   '(menu-bar-mode nil)
+   '(tool-bar-mode nil)
+   )
+#+end_src
+
+*** Tab bar
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(tab-bar-tab-hints t)
+   '(tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
+   '(tab-bar-close-button-show nil))
+#+end_src
+
+*** カーソルを点滅させない
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(blink-cursor-mode nil))
+#+end_src
+
+*** 行番号を表示する
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(global-display-line-numbers-mode t)
+   '(display-line-numbers-widen t))
+#+end_src
+
+*** show-paren
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(show-paren-mode t)
+   '(show-paren-delay 0)
+   '(show-paren-style 'mixed)
+   '(show-paren-when-point-in-periphery t)
+   '(show-paren-when-point-inside-paren t))
+#+end_src
+
+*** show-trailing-whitespace
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(show-trailing-whitespace t))
+#+end_src
+
+*** 保存時に末尾のスペースを削除する
+
+#+begin_src emacs-lisp
+  (add-hook 'before-save-hook #'delete-trailing-whitespace)
+#+end_src
+
+*** visible bell
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+      '(visible-bell t))
+#+end_src
+
+** Global keybinds
+
+#+begin_src emacs-lisp
+  (define-key key-translation-map [?\C-h] [?\C-?])
+  (global-set-key (kbd "C-?") 'help-command)
+
+  (global-unset-key (kbd "C-x C-c"))   ;orig. save-buffers-kill-terminal
+  (global-unset-key (kbd "C-z"))       ;orig. suspend-frame
+  (global-unset-key (kbd "C-x C-z"))   ;orig. suspend-frame
+
+  (global-set-key (kbd "C-w") 'my/kill-region-or-backward-kill-word) ;orig. kill-region
+#+end_src
+
+** Misc
+
+*** simple
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(indent-tabs-mode nil)
+   '(kill-whole-line t)
+   '(track-eol t)
+   '(line-move-visual nil)
+   '(line-number-mode nil)
+   '(column-number-mode nil)
+   )
+#+end_src
+
+#+end_src
+
+*** files
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+  '(require-final-newline t))
+#+end_src
+
+*** autorevert
+#+begin_src emacs-lisp
+  (custom-set-variables
+  '(global-auto-revert-mode t))
+#+end_src
+
+*** recentf
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(recentf-mode t)
+   '(recentf-save-file (my/user-data "recentf")))
+#+end_src
+
+*** savehist
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(savehist-mode t)
+   '(savehist-file (my/user-data "history")))
+#+end_src
+
+*** bookmark
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(bookmark-default-file (my/user-data "bookmarks")))
+#+end_src
+
+*** dired
+
+#+begin_src emacs-lisp
+  (with-eval-after-load 'dired
+    (define-key dired-mode-map (kbd "e") #'wdired-change-to-wdired-mode))
+#+end_src
+
+*** project
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(project-list-file (my/user-data "projects")))
+#+end_src
+
+*** which-func
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(which-function-mode t))
+#+end_src
+
+*** enable narrowing
+
+#+begin_src emacs-lisp
+  (put 'narrow-to-region 'disabled nil)
+  (put 'narrow-to-page 'disabled nil)
+#+end_src
+
+*** others
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   ;; C source code
+   '(history-delete-duplicates t)
+   '(auto-save-list-file-name (my/user-data "auto-save-list/.saves-"))
+   '(enable-recursive-minibuffers t))
+#+end_src
+
+
+* Theme and modeline
+
+** doom-themes
+
+#+begin_src emacs-lisp
+  (use-package doom-themes
+    :config
+    (load-theme 'doom-dracula t)
+    (doom-themes-org-config)
+    (doom-themes-treemacs-config)
+    (doom-themes-visual-bell-config))
+#+end_src
+
+** doom-modeline
+
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :custom
+    (doom-modeline-mode t)
+    (doom-modeline-buffer-file-name-style 'truncate-with-project)
+    (doom-modeline-icon t)
+    (doom-modeline-minor-modes t))
+#+end_src
+
+** minions
+
+#+begin_src emacs-lisp
+  (use-package minions
+    :custom
+    (minions-mode t))
+#+end_src
+
+* Org
+
+** org
+
+#+begin_src emacs-lisp
+  (use-package org
+    :bind (nil
+           ("C-c a" . org-agenda)
+           ("C-c c" . org-capture)
+           )
+    :custom
+    ;; org-persist
+    (org-persist-directory (my/user-data "org-persist/")))
+#+end_src
+
+** org-bullets
+
+#+begin_src emacs-lisp
+  (use-package org-bullets
+    :hook (org-mode . org-bullets-mode))
+#+end_src
+
+** org-babel
+
+*** ob-go
+
+#+begin_src emacs-lisp
+  (use-package ob-go
+    :after org
+    :config
+    (org-babel-do-load-languages 'org-babel-load-languges
+                                 '((go . t))))
+#+end_src
+
+* Prog
+** Go
+
+#+begin_src emacs-lisp
+  (use-package go-mode
+    :hook
+    (go-mode . lsp-deferred))
+#+end_src
+
+** Protocol Buffer
+
+#+begin_src emacs-lisp
+  (use-package protobuf-mode)
+#+end_src
+
+** PlantUML
+
+#+begin_src emacs-lisp
+  (use-package plantuml-mode
+    :defer t
+    :custom
+    (plantuml-jar-path (expand-file-name "~/bin/plantuml.jar")))
+#+end_src
+
+* LSP
+
+** lsp-mode
+
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    :custom
+    (lsp-completion-provider :none)
+    :hook
+    (lsp-mode . lsp-enable-which-key-integration)
+    :init
+    (setq lsp-keymap-prefix "C-c C-l")
+    )
+#+end_src
+
+** lsp-ui
+
+#+begin_src emacs-lisp
+  (use-package lsp-ui
+    :after lsp
+    :bind (nil
+           :map lsp-mode-map
+           ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+           ([remap xref-find-references] . lsp-ui-peek-find-references)
+           )
+    :custom
+    ;; lsp-ui-sideline
+    (lsp-ui-sideline-enable t)
+    (lsp-ui-sideline-delay 0)
+    (lsp-ui-sideline-show-hover t)
+    ;; lsp-ui-peek
+    (lsp-ui-peek-enable t)
+    (lsp-ui-peek-always-show t)
+    ;; lsp-ui-doc
+    (lsp-ui-doc-enable t)
+    (lsp-ui-doc-delay 0)
+    (lsp-ui-doc-header t)
+    (lsp-ui-doc-include-signature t)
+    (lsp-ui-doc-position 'bottom)
+    (lsp-ui-doc-use-childframe t)
+    (lsp-ui-doc-flycheck-enable t)
+    ;; lsp-ui-imenu
+    (lsp-ui-imenu-auto-refresh)
+    (lsp-ui-imenu-auto-refresh-delay 0.0)
+    )
+#+end_src
+
+** consult-lsp
+
+#+begin_src emacs-lisp
+  (use-package consult-lsp
+   :after (consult lsp))
+#+end_src
+
+* Completion
+** vertico
+
+#+begin_src emacs-lisp
+  (use-package vertico
+    :bind (nil
+           :map vertico-map
+           ("?"     . minibuffer-completion-help)
+           ("M-RET" . minibuffer-force-complete-and-exit)
+           ("M-TAB" . minibuffer-complete)
+           ("C-l"   . vertico-directory-up)
+           )
+    :custom
+    (vertico-mode t)
+    (vertico-multiform-mode t)
+    (vertico-cycle t)
+    )
+#+end_src
+
+*** vertico-posframe
+
+#+begin_src emacs-lisp
+  (use-package vertico-posframe
+    :after (vertico posframe)
+    :custom
+    (vertico-posframe-mode t)
+    )
+#+end_src
+
+** marginalia
+
+#+begin_src emacs-lisp
+  (use-package marginalia
+    :custom
+    (marginalia-mode t)
+    :hook
+    (marginalia-mode . all-the-icons-completion-marginalia-setup)
+    )
+#+end_src
+
+** orderless
+
+#+begin_src emacs-lisp
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless))
+    )
+#+end_src
+
+** consult
+
+#+begin_src emacs-lisp
+  (use-package consult
+    :bind (nil
+           ([remap switch-to-buffer]              . consult-buffer)
+           ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
+           ([remap switch-to-buffer-other-frame]  . consult-buffer-other-frame)
+           ([remap project-switch-to-buffer]      . consult-project-buffer)
+           ([remap bookmark-set]                  . consult-bookmark)
+           ([remap bookmark-jump]                 . consult-bookmark)
+           ([remap yank-pop]                      . consult-yank-pop)
+           ([remap isearch-forawrd]               . consult-line)
+
+           :map org-mode-map
+           ("C-*" . consult-org-heading)
+
+           :map goto-map
+           ("g"   . consult-goto-line)    ;orig. goto-line
+           ("M-g" . consult-goto-line)    ;orig. goto-line
+           ("i"   . consult-imenu)        ;orig. imenu
+           ("I"   . consult-imenu-multi)  ;orig. imenu
+
+           :map search-map
+           ("g" . consult-grep)
+           ("G" . consult-git-grep)
+           ("l" . consult-line)
+           ("L" . consult-line-multi)
+
+           :map isearch-mode-map
+           ("M-e"   . consult-isearch-history)
+           ("M-s e" . consult-isearch-history)
+           ("M-s l" . consult-line)
+           ("M-s L" . consult-line-multi)
+           )
+    :custom
+    (xref-show-xrefs-function #'consult-xref)
+    (xref-show-definitions-function #'consult-xref)
+    )
+#+end_src
+
+** embark
+
+#+begin_src emacs-lisp
+  (use-package embark
+    :bind (nil
+           ("C-." . embark-act)
+           ("M-." . embark-dwim)
+           )
+    :custom
+    (embark-help-key "?")
+    )
+#+end_src
+
+*** embark-consult
+
+#+begin_src emacs-lisp
+  (use-package embark-consult
+    :after (embark consult))
+#+end_src
+
+** corfu
+
+#+begin_src emacs-lisp
+  (use-package corfu
+    :custom
+    (global-corfu-mode t)
+    (corfu-auto nil)
+    (corfu-auto-delay 0)
+    (corfu-auto-prefix 0)
+    (corfu-cycle t)
+    (corfu-preselect 'prompt)
+    (corfu-quit-at-boundary t)
+    (corfu-quit-no-match t)
+    (corfu-exclude-modes '(shell-mode))
+    ;; corfu-popupinfo
+    (corfu-popupinfo-mode t)
+    (corfu-popupinfo-delay '(0 . 0))
+    :hook
+    (corfu-mode . corfu-popupinfo-mode))
+#+end_src
+
+** kind-icon
+
+#+begin_src emacs-lisp
+  (use-package kind-icon
+    :after corfu
+    :custom
+    (kind-icon-default-face 'corfu-default)
+    :init
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+#+end_src
+
+* Packages
+** all-the-icons
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons)
+#+end_src
+
+** all-the-icons-dired
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons-dired
+    :hook
+    (dired-mode . all-the-icons-dired-mode))
+#+end_src
+
+** all-the-icons-completion
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons-completion
+   :custom
+     (all-the-icons-completion-mode t)
+    )
+#+end_src
+
+** beacon
+
+#+begin_src emacs-lisp
+  (use-package beacon
+    :custom
+    (beacon-mode t)
+    (beacon-color "yellow")
+    )
+#+end_src
+
+** ffap
+
+#+begin_src emacs-lisp
+  (use-package ffap
+    :bind (nil
+	   ("C-c v" . ffap)
+	   )
+    )
+#+end_src
+
+** flycheck
+
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :custom
+    (global-flycheck-mode t)
+    )
+#+end_src
+
+** highlight-indent-guides
+
+#+begin_src emacs-lisp
+  (use-package highlight-indent-guides
+    :hook
+    ((prog-mode yaml-mode) . highlight-indent-guides-mode)
+    :custom
+    (highlight-indent-guides-auto-enabled t)
+    (highlight-indent-guides-responsive 'stack)
+    (highlight-indent-guides-method 'column)
+    )
+#+end_src
+
+** magit
+
+#+begin_src emacs-lisp
+  (use-package magit
+    :custom
+    (magit-auto-revert-mode t)
+    :hook
+    (after-save . magit-after-save-refresh-status)
+    (after-save . magit-after-save-refresh-buffers))
+#+end_src
+
+** minimap
+
+#+begin_src emacs-lisp
+  (use-package minimap
+    :custom
+    (minimap-automatically-delete-window nil)
+    (minimap-update-delay 0)
+    (minimap-window-location 'right)
+    (minimap-major-modes '(prog-mode org-mode))
+    )
+#+end_src
+
+** open-junk-file
+
+#+begin_src emacs-lisp
+  (use-package open-junk-file
+    :bind (nil
+	   ("C-c j" . open-junk-file)
+	   )
+    :custom
+    (open-junk-file-format "~/junk/%Y/%m/%d-%H%M%S." t)
+    )
+#+end_src
+
+** rainbow-delimiters
+
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :hook
+    (prog-mode . rainbow-delimiters-mode)
+    )
+#+end_src
+
+** volatile-highlights
+
+#+begin_src emacs-lisp
+  (use-package volatile-highlights
+    :custom
+    (volatile-highlights-mode t)
+    :custom-face
+    (vhl/default-face ((nil (:foreground "red" :background "yellow"))))
+    )
+#+end_src
+
+** which-key
+
+#+begin_src emacs-lisp
+  (use-package which-key
+    :custom
+    (which-key-mode t)
+    (which-key-idle-delay 0.0)
+    (which-key-idle-secondary-delay 0.0)
+    (which-key-popup-type 'side-window))
+#+end_src
