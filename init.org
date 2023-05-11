@@ -11,6 +11,17 @@
   (add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold my/original-gc-cons-threshold)))
 #+end_src
 
+** Magic File Nameを一時的に無効化する
+
+#+begin_src emacs-lisp
+      (defconst my/original-file-name-handler-alist file-name-handler-alist)
+      (setq file-name-handler-alist nil)
+      (add-hook 'after-init-hook
+                #'(lambda ()
+                    (setq file-name-handler-alist
+                          my/original-file-name-handler-alist)))
+#+end_src
+
 ** profiler
 
 #+begin_src emacs-lisp
