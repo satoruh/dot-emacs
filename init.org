@@ -593,8 +593,8 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package all-the-icons-completion
-   :custom
-     (all-the-icons-completion-mode t)
+    :custom
+    (all-the-icons-completion-mode t)
     )
 #+end_src
 
