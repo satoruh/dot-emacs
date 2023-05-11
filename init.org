@@ -654,6 +654,13 @@ markがactiveなとき（リージョンがハイライトされているとき�
     (after-save . magit-after-save-refresh-buffers))
 #+end_src
 
+*** forge
+
+#+begin_src emacs-lisp
+  (use-package forge
+    :after magit)
+#+end_src
+
 ** minimap
 
 #+begin_src emacs-lisp
