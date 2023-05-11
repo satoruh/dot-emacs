@@ -28,4 +28,3 @@ link:
 .PHONY: clean
 clean:
 	@rm -f init.el{,c} early-init.el{,c}
-
