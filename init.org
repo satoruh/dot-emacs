@@ -97,7 +97,10 @@ markがactiveなとき（リージョンがハイライトされているとき�
     :ensure t
     :init
     (when (memq window-system '(mac ns x))
-      (exec-path-from-shell-initialize)))
+      (exec-path-from-shell-initialize))
+    :custom
+    (exec-path-from-shell-arguments '("-l")) ;orig. '("-l" "-i")
+    )
 #+end_src
 
 ** Frames and display settings
