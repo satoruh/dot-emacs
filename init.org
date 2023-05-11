@@ -618,6 +618,15 @@ markがactiveなとき（リージョンがハイライトされているとき�
     )
 #+end_src
 
+** browse-at-remote
+
+#+begin_src emacs-lisp
+  (use-package browse-at-remote
+    :bind (nil
+           ("C-c u" . browse-url-at-point))
+    :commands browse-at-remote-get-url)
+#+end_src
+
 ** ffap
 
 #+begin_src emacs-lisp
