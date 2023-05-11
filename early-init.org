@@ -1,0 +1,12 @@
+#+TITLE: early-init.org
+#+STARTUP: overview
+
+* Frames
+
+#+begin_src emacs-lisp
+  (push '(vertical-scroll-bars . nil) default-frame-alist)
+  (push '(horizontal-scroll-bars . nil) default-frame-alist)
+  (push '(menu-bar-lines . nil) default-frame-alist)
+  (push '(tool-bar-lines . nil) default-frame-alist)
+  (push '(font . "HackGen35 Console NFJ-18") default-frame-alist)
+#+end_src

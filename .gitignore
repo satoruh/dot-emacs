@@ -5,3 +5,5 @@
 *.eln
 .\#*
 /elpa/
+
+early-init.el
