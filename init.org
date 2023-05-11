@@ -637,6 +637,14 @@ markがactiveなとき（リージョンがハイライトされているとき�
     )
 #+end_src
 
+** git-gutter
+
+#+begin_src emacs-lisp
+  (use-package git-gutter
+    :custom
+    (global-git-gutter-mode t))
+#+end_src
+
 ** highlight-indent-guides
 
 #+begin_src emacs-lisp
