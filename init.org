@@ -3,6 +3,14 @@
 
 * Setup
 
+** GCを調整して初期化中に実行されないようにする
+
+#+begin_src emacs-lisp
+  (defconst my/original-gc-cons-threshold gc-cons-threshold)
+  (setq gc-cons-threshold most-positive-fixnum)
+  (add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold my/original-gc-cons-threshold)))
+#+end_src
+
 ** profiler
 
 #+begin_src emacs-lisp
