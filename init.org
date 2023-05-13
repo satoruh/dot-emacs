@@ -376,7 +376,8 @@ markがactiveなとき（リージョンがハイライトされているとき�
 ** Protocol Buffer
 
 #+begin_src emacs-lisp
-  (use-package protobuf-mode)
+  (use-package protobuf-mode
+ :defer t)
 #+end_src
 
 ** PlantUML
@@ -679,6 +680,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package magit
+    :defer t
     :custom
     (magit-auto-revert-mode t)
     :hook
@@ -709,6 +711,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package minimap
+    :defer t
     :custom
     (minimap-automatically-delete-window nil)
     (minimap-update-delay 0)
