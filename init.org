@@ -746,6 +746,8 @@ markがactiveなとき（リージョンがハイライトされているとき�
     (treemacs-git-mode t)
     (treemacs-is-never-other-window t)
     (treemacs-missing-project-action 'keep)
+    (treemacs-persist-file (my/user-data "treemacs-persist"))
+    (treemacs-last-error-persist-file (my/user-data "treemacs-persist-at-last-error"))
     :hook
     (treemacs-mode . (lambda () (display-line-numbers-mode -1))))
 
