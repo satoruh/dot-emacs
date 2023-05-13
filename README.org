@@ -1,1 +1,4 @@
 * .emacs.d
+
+- [[file:early-init.org]]
+- [[file:init.org]]
