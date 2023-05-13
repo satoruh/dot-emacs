@@ -759,8 +759,8 @@ markがactiveなとき（リージョンがハイライトされているとき�
     (treemacs-mode . (lambda () (display-line-numbers-mode -1))))
 
   (use-package treemacs-all-the-icons
-    :after treemacs
-    :init
+    :after (treemacs all-the-icons)
+    :config
     (treemacs-load-theme "all-the-icons")
     )
 
