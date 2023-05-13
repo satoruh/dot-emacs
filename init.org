@@ -684,7 +684,9 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package forge
-    :after magit)
+    :after magit
+    :custom
+    (forge-database-file (my/user-data "forge-database.sqlite")))
 #+end_src
 
 ** transient
