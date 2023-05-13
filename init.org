@@ -78,6 +78,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
       (backward-kill-word arg)))
 #+end_src
 
+
 * General
 
 ** Coding system
@@ -686,6 +687,16 @@ markがactiveなとき（リージョンがハイライトされているとき�
     :after magit)
 #+end_src
 
+** transient
+
+#+begin_src emacs-lisp
+  (use-package transient
+    :defer t
+    :custom
+    (transient-levels-file (my/user-data "transient/levels.el"))
+    (transient-values-file (my/user-data "transient/values.el"))
+    (transient-history-file (my/user-data "transient/history.el")))
+#+end_src
 ** minimap
 
 #+begin_src emacs-lisp
