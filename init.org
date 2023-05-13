@@ -396,6 +396,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
   (use-package lsp-mode
     :custom
     (lsp-completion-provider :none)
+    (lsp-session-file (my/user-data "lsp-session"))
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
     :init
