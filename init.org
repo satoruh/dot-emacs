@@ -749,7 +749,6 @@ markがactiveなとき（リージョンがハイライトされているとき�
     (treemacs-collapse-dirs 3)
     (treemacs-filewatch-mode t)
     (treemacs-follow-mode t)
-    (treemacs-fringe-indicator-mode always)
     (treemacs-git-commit-diff-mode t)
     (treemacs-git-mode t)
     (treemacs-is-never-other-window t)
