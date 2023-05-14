@@ -198,6 +198,10 @@ markがactiveなとき（リージョンがハイライトされているとき�
   (global-unset-key (kbd "C-x C-z"))   ;orig. suspend-frame
 
   (global-set-key (kbd "C-w") 'my/kill-region-or-backward-kill-word) ;orig. kill-region
+  (global-set-key (kbd "C-x k") 'kill-current-buffer) ;orig. kill-buffer
+  (global-set-key (kbd "C-x M-c") 'restart-emacs)
+  (global-set-key (kbd "M-o") 'other-window)
+  (global-set-key (kbd "M-O") #'(lambda () (interactive) (other-window -1)))
 #+end_src
 
 ** Misc
