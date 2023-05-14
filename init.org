@@ -316,10 +316,12 @@ markがactiveなとき（リージョンがハイライトされているとき�
 #+begin_src emacs-lisp
   (use-package doom-modeline
     :custom
-    (doom-modeline-mode t)
     (doom-modeline-buffer-file-name-style 'truncate-with-project)
     (doom-modeline-icon t)
-    (doom-modeline-minor-modes t))
+    (doom-modeline-minor-modes t)
+    :hook
+    (after-init . doom-modeline-mode)
+    )
 #+end_src
 
 ** minions
