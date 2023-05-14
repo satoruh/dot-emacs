@@ -223,6 +223,16 @@ markがactiveなとき（リージョンがハイライトされているとき�
   '(require-final-newline t))
 #+end_src
 
+*** custom-fileを設定する
+
+user-init-file (init.el) に書かないようにする
+load していないので、内容は再起動時に無視される
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(custom-file (expand-file-name "custom.el" user-emacs-directory)))
+#+end_src
+
 *** autorevert
 #+begin_src emacs-lisp
   (custom-set-variables
