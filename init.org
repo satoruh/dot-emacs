@@ -673,6 +673,18 @@ load していないので、内容は再起動時に無視される
     )
 #+end_src
 
+*** consult-flycheck
+
+#+begin_src emacs-lisp
+  (use-package consult-flycheck
+    :after (consult flycheck)
+    :bind (nil
+           :map flycheck-mode-map
+           ([remap flycheck-list-errors] . consult-flycheck)
+           )
+    )
+#+end_src
+
 ** git-gutter
 
 #+begin_src emacs-lisp
