@@ -776,7 +776,8 @@ markがactiveなとき（リージョンがハイライトされているとき�
     )
 
   (use-package treemacs-tab-bar
-    :after treemacs)
+    :after treemacs
+    :disabled t)
 #+end_src
 
 ** volatile-highlights
