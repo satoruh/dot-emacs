@@ -280,13 +280,19 @@ markがactiveなとき（リージョンがハイライトされているとき�
    '(compilation-scroll-output 'first-error))
 #+end_src
 
+*** warnings
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(warning-suppress-types '((comp))))
+#+end_src
+
 *** enable narrowing
 
 #+begin_src emacs-lisp
   (put 'narrow-to-region 'disabled nil)
   (put 'narrow-to-page 'disabled nil)
 #+end_src
-
 *** others
 
 #+begin_src emacs-lisp
