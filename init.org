@@ -506,7 +506,7 @@ load していないので、内容は再起動時に無視される
 
 #+begin_src emacs-lisp
   (use-package vertico-posframe
-    :after (vertico posframe)
+    :after vertico
     :custom
     (vertico-posframe-mode t)
     )
