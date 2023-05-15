@@ -509,6 +509,13 @@ load していないので、内容は再起動時に無視される
     :after vertico
     :custom
     (vertico-posframe-mode t)
+    (vertico-multiform-commands
+     '((consult-line
+        posframe
+        (vertico-posframe-poshandler . posframe-poshandler-frame-bottom-center))
+       (consult-bookmark
+        posframe
+        (vertico-posframe-poshandler . posframe-poshandler-frame-bottom-center))))
     )
 #+end_src
 
