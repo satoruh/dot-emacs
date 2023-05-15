@@ -411,6 +411,15 @@ load していないので、内容は再起動時に無視される
     (plantuml-jar-path (expand-file-name "~/bin/plantuml.jar")))
 #+end_src
 
+*** flycheck-plauntuml
+
+#+begin_src emacs-lisp
+  (use-package flycheck-plantuml
+    :after (flycheck plantuml-mode)
+    :config
+    (flycheck-plantuml-setup))
+#+end_src
+
 ** YAML
 
 #+begin_src emacs-lisp
