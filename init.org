@@ -423,6 +423,12 @@ load していないので、内容は再起動時に無視される
     (flycheck-plantuml-setup))
 #+end_src
 
+** Terraform
+
+#+begin_src emacs-lisp
+  (use-package terraform-mode :defer t)
+#+end_src
+
 ** YAML
 
 #+begin_src emacs-lisp
