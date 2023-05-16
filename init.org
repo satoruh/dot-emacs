@@ -745,6 +745,7 @@ load していないので、内容は再起動時に無視される
     :custom
     (imenu-list-focus-after-activation nil)
     (imenu-list-idle-update-delay 0.0)
+    (imenu-list-mode-line-format nil)
     :hook
     (imenu-list-major-mode . (lambda () (display-line-numbers-mode -1))))
 #+end_src
