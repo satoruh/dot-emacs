@@ -623,7 +623,7 @@ load していないので、内容は再起動時に無視される
   (use-package corfu
     :custom
     (global-corfu-mode t)
-    (corfu-auto nil)
+    (corfu-auto t)
     (corfu-auto-delay 0)
     (corfu-auto-prefix 0)
     (corfu-cycle t)
