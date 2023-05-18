@@ -14,25 +14,25 @@
 ** Magic File Nameを一時的に無効化する
 
 #+begin_src emacs-lisp
-      (defconst my/original-file-name-handler-alist file-name-handler-alist)
-      (setq file-name-handler-alist nil)
-      (add-hook 'after-init-hook
-                #'(lambda ()
-                    (setq file-name-handler-alist
-                          my/original-file-name-handler-alist)))
+  (defconst my/original-file-name-handler-alist file-name-handler-alist)
+  (setq file-name-handler-alist nil)
+  (add-hook 'after-init-hook
+            #'(lambda ()
+                (setq file-name-handler-alist
+                      my/original-file-name-handler-alist)))
 #+end_src
 
 ** profiler
 
 #+begin_src emacs-lisp
-   (defconst my/enable-profile nil)
+  (defconst my/enable-profile nil)
 
-   (when my/enable-profile
-     (require 'profiler)
-     (profiler-start 'cpu+mem)
-     (add-hook 'after-init-hook #'(lambda ()
-                                    (profiler-report)
-                                    (profiler-stop))))
+  (when my/enable-profile
+    (require 'profiler)
+    (profiler-start 'cpu+mem)
+    (add-hook 'after-init-hook #'(lambda ()
+                                   (profiler-report)
+                                   (profiler-stop))))
 #+end_src
 
 ** use-package
@@ -185,7 +185,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (custom-set-variables
-      '(visible-bell t))
+   '(visible-bell t))
 #+end_src
 
 ** Global keybinds
@@ -225,7 +225,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (custom-set-variables
-  '(require-final-newline t))
+   '(require-final-newline t))
 #+end_src
 
 *** custom-fileを設定する
@@ -241,7 +241,7 @@ load していないので、内容は再起動時に無視される
 *** autorevert
 #+begin_src emacs-lisp
   (custom-set-variables
-  '(global-auto-revert-mode t))
+   '(global-auto-revert-mode t))
 #+end_src
 
 *** recentf
@@ -402,7 +402,7 @@ load していないので、内容は再起動時に無視される
 
 #+begin_src emacs-lisp
   (use-package protobuf-mode
- :defer t)
+    :defer t)
 #+end_src
 
 ** PlantUML
@@ -488,7 +488,7 @@ load していないので、内容は再起動時に無視される
 
 #+begin_src emacs-lisp
   (use-package consult-lsp
-   :after (consult lsp))
+    :after (consult lsp))
 #+end_src
 
 * Completion
@@ -688,8 +688,8 @@ load していないので、内容は再起動時に無視される
 #+begin_src emacs-lisp
   (use-package ffap
     :bind (nil
-	   ("C-c v" . ffap)
-	   )
+           ("C-c v" . ffap)
+           )
     )
 #+end_src
 
@@ -799,8 +799,8 @@ load していないので、内容は再起動時に無視される
 #+begin_src emacs-lisp
   (use-package open-junk-file
     :bind (nil
-	   ("C-c j" . open-junk-file)
-	   )
+           ("C-c j" . open-junk-file)
+           )
     :custom
     (open-junk-file-format "~/junk/%Y/%m/%d-%H%M%S." t)
     )
