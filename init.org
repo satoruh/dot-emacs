@@ -621,6 +621,15 @@ load していないので、内容は再起動時に無視される
 
 #+begin_src emacs-lisp
   (use-package corfu
+    :preface
+    (defun my/corfu-insert-or-newline ()
+      (interactive)
+      (if (> corfu--index 0)
+          (corfu-insert)
+        (newline)))
+    :bind (nil
+           :map corfu-map
+           ("<RET>" . my/corfu-insert-or-newline))
     :custom
     (global-corfu-mode t)
     (corfu-auto t)
