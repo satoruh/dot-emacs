@@ -766,6 +766,7 @@ load していないので、内容は再起動時に無視される
     :defer t
     :custom
     (magit-auto-revert-mode t)
+    (magit-diff-refine-hunk 'all)
     :hook
     (after-save . magit-after-save-refresh-status)
     (after-save . magit-after-save-refresh-buffers))
