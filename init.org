@@ -863,6 +863,9 @@ load していないので、内容は再起動時に無視される
   (use-package treemacs-tab-bar
     :after treemacs
     :disabled t)
+
+  (use-package treemacs-magit
+    :after (treemacs magit))
 #+end_src
 
 ** volatile-highlights
