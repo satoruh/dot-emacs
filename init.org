@@ -561,6 +561,12 @@ load していないので、内容は再起動時に無視される
            ([remap bookmark-jump]                 . consult-bookmark)
            ([remap yank-pop]                      . consult-yank-pop)
            ([remap isearch-forawrd]               . consult-line)
+           ("C-*"                                 . consult-outline)
+
+           ;; for register
+           ("M-#"   . consult-register-load)
+           ("M-'"   . consult-register-store) ;orig. abbrev-prefix-mark
+           ("C-M-#" . consult-register)
 
            :map org-mode-map
            ("C-*" . consult-org-heading)
@@ -576,6 +582,8 @@ load していないので、内容は再起動時に無視される
            ("G" . consult-git-grep)
            ("l" . consult-line)
            ("L" . consult-line-multi)
+           ("k" . consult-keep-lines)
+           ("u" . consult-focus-lines)
 
            :map isearch-mode-map
            ("M-e"   . consult-isearch-history)
