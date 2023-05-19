@@ -716,6 +716,16 @@ GripはGitHubのAPIを呼ぶ
     :commands browse-at-remote-get-url)
 #+end_src
 
+** change-inner
+
+#+begin_src emacs-lisp
+  (use-package change-inner
+    :bind (nil
+           ("M-i" . change-inner)         ;orig.tabs-to-tab-stop
+           )
+    )
+#+end_src
+
 ** ffap
 
 #+begin_src emacs-lisp
