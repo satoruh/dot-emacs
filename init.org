@@ -281,6 +281,15 @@ load していないので、内容は再起動時に無視される
    '(project-list-file (my/user-data "projects")))
 #+end_src
 
+*** xwidget
+
+#+begin_src emacs-lisp
+  (use-package xwidget
+    :defer t
+    :hook
+    (xwidget-webkit-mode . (lambda () (display-line-numbers-mode -1))))
+#+end_src
+
 *** which-func
 
 #+begin_src emacs-lisp
