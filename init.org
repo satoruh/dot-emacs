@@ -448,8 +448,14 @@ load していないので、内容は再起動時に無視される
     (lsp-session-file (my/user-data "lsp-session"))
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
+    (lsp-completion-mode . my/lsp-mode-setup-completion)
     :init
     (setq lsp-keymap-prefix "C-c C-l")
+
+    (defun my/lsp-mode-setup-completion ()
+      (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+            '(orderless)
+            ))
     )
 #+end_src
 
@@ -628,8 +634,6 @@ load していないので、内容は再起動時に無視される
     (corfu-auto-prefix 0)
     (corfu-cycle t)
     (corfu-preselect 'prompt)
-    (corfu-quit-at-boundary t)
-    (corfu-quit-no-match t)
     (corfu-exclude-modes '(shell-mode))
     ;; corfu-popupinfo
     (corfu-popupinfo-mode t)
