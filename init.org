@@ -437,6 +437,26 @@ load していないので、内容は再起動時に無視される
     :defer t)
 #+end_src
 
+** Markdown
+
+#+begin_src emacs-lisp
+  (use-package markdown-mode
+    :defer t)
+#+end_src
+
+*** grip-mode
+
+Markdownのプレビューに[[https://github.com/joeyespo/grip][Grip]]を利用する。
+GripはGitHubのAPIを呼ぶ
+
+#+begin_src emacs-lisp
+  (use-package grip-mode
+    :after markdown-mode
+    :bind (nil
+           :map markdown-mode-command-map
+           ("g" . grip-mode)))
+#+end_src
+
 * LSP
 
 ** lsp-mode
