@@ -1,0 +1,15 @@
+#+TITLE: init-local.org
+#+STARTUP: show5levels
+
+* Local configurations
+
+#+begin_src emacs-lisp
+  (message "Load init-local.el...")
+#+end_src
+
+* Local Variables
+
+# Local Variables:
+# mode: org
+# eval: (add-hook 'after-save-hook (lambda () (org-babel-tangle-file "init-local.org" "init-local.el" "emacs-lisp")) nil t)
+# End:

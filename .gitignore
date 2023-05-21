@@ -8,5 +8,6 @@
 
 early-init.el
 init.el
-init-local.el
+init-local.*
+!init-local.org.tmpl
 custom.el
