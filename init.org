@@ -435,8 +435,16 @@ load していないので、内容は再起動時に無視される
 
 ** Terraform
 
+https://github.com/hashicorp/terraform-ls
+terraform-lsの自動インストールはサポートされないので、下記のコマンドでインストールする
+#+begin_src shell
+  brew install hashicorp/tap/terraform-ls
+#+end_src
+
 #+begin_src emacs-lisp
-  (use-package terraform-mode :defer t)
+  (use-package terraform-mode
+    :hook
+    (terraform-mode . lsp-deferred))
 #+end_src
 
 ** YAML
