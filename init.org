@@ -111,6 +111,19 @@ markがactiveなとき（リージョンがハイライトされているとき�
     )
 #+end_src
 
+** asdf
+
+#+begin_src emacs-lisp
+  (use-package asdf
+    :load-path "~/src/github.com/tabfugnic/asdf.el"
+    :config
+    (asdf-enable)
+    (exec-path-from-shell-copy-envs '("ASDF_DATA_DIR" "ASDF_CONFIG_FILE"))
+    :custom
+    (asdf-path (getenv "ASDF_DATA_DIR"))
+    (asdf-binary "/opt/homebrew/opt/asdf/libexec/bin/asdf"))
+#+end_src
+
 ** Frames and display settings
 *** startup
 
