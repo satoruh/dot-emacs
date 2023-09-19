@@ -570,9 +570,8 @@ GripはGitHubのAPIを呼ぶ
     (lsp-ui-doc-include-signature t)
     (lsp-ui-doc-position 'bottom)
     (lsp-ui-doc-use-childframe t)
-    (lsp-ui-doc-flycheck-enable t)
     ;; lsp-ui-imenu
-    (lsp-ui-imenu-auto-refresh)
+    (lsp-ui-imenu-auto-refresh t)
     (lsp-ui-imenu-auto-refresh-delay 0.0)
     )
 #+end_src
@@ -808,7 +807,7 @@ GripはGitHubのAPIを呼ぶ
   (use-package flycheck
     :custom
     (global-flycheck-mode t)
-    )
+    (flycheck-display-errors-delay .0))
 #+end_src
 
 *** consult-flycheck
@@ -819,8 +818,7 @@ GripはGitHubのAPIを呼ぶ
     :bind (nil
            :map flycheck-mode-map
            ([remap flycheck-list-errors] . consult-flycheck)
-           )
-    )
+           ))
 #+end_src
 
 ** git-gutter
