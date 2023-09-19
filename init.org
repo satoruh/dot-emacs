@@ -549,7 +549,7 @@ GripはGitHubのAPIを呼ぶ
 
 #+begin_src emacs-lisp
   (use-package lsp-ui
-    :after lsp
+    :after lsp-mode
     :bind (nil
            :map lsp-mode-map
            ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
