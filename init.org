@@ -336,7 +336,7 @@ load していないので、内容は再起動時に無視される
   (custom-set-variables
    ;; C source code
    '(history-delete-duplicates t)
-   '(auto-save-list-file-name (my/user-data "auto-save-list/.saves-"))
+   '(auto-save-list-file-prefix (my/user-data "auto-save-list/.saves-"))
    '(enable-recursive-minibuffers t))
 #+end_src
 
