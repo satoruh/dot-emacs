@@ -262,6 +262,7 @@ load していないので、内容は再起動時に無視される
 #+begin_src emacs-lisp
   (custom-set-variables
    '(recentf-mode t)
+   '(recentf-max-saved-items nil)
    '(recentf-save-file (my/user-data "recentf")))
 #+end_src
 
