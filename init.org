@@ -347,10 +347,11 @@ load していないので、内容は再起動時に無視される
 
 #+begin_src emacs-lisp
   (use-package doom-themes
+    :custom
+    (doom-themes-treemacs-theme "doom-colors")
     :config
     (load-theme 'doom-dracula t)
     (doom-themes-org-config)
-    (setq doom-themes-treemacs-theme "doom-colors")
     (doom-themes-treemacs-config)
     (doom-themes-visual-bell-config))
 #+end_src
