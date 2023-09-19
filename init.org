@@ -583,6 +583,20 @@ GripはGitHubのAPIを呼ぶ
     :after (consult lsp))
 #+end_src
 
+
+* DAP
+
+** dap-mode
+
+#+begin_src emacs-lisp
+  (use-package dap-mode
+    :after lsp-mode
+    :config
+    (dap-auto-configure-mode t)
+    (require 'dap-hydra)
+    (require 'dap-dlv-go))
+#+end_src
+
 * Completion
 ** vertico
 
