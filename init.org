@@ -195,6 +195,13 @@ markがactiveなとき（リージョンがハイライトされているとき�
    '(indicate-empty-lines t))
 #+end_src
 
+*** indicate-buffer-boundaries
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(indicate-buffer-boudaries 'left))
+#+end_src
+
 *** 保存時に末尾のスペースを削除する
 
 #+begin_src emacs-lisp
