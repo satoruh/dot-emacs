@@ -399,6 +399,9 @@ load していないので、内容は再起動時に無視される
     :bind (nil
            ("C-c a" . org-agenda)
            ("C-c c" . org-capture)
+
+           :map org-mode-map
+           ("C-*" . consult-org-heading)
            )
     :custom
     ;; org-persist
@@ -730,9 +733,6 @@ GripはGitHubのAPIを呼ぶ
            ("M-#"   . consult-register-load)
            ("M-'"   . consult-register-store) ;orig. abbrev-prefix-mark
            ("C-M-#" . consult-register)
-
-           :map org-mode-map
-           ("C-*" . consult-org-heading)
 
            :map goto-map
            ("g"   . consult-goto-line)    ;orig. goto-line
