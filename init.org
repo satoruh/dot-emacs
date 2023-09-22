@@ -346,6 +346,15 @@ load していないので、内容は再起動時に無視される
   (put 'narrow-to-region 'disabled nil)
   (put 'narrow-to-page 'disabled nil)
 #+end_src
+
+*** server
+
+#+begin_src emacs-lisp
+  (use-package server
+    :hook
+    (after-init . server-start))
+#+end_src
+
 *** others
 
 #+begin_src emacs-lisp
