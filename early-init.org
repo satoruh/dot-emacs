@@ -8,5 +8,5 @@
   (push '(horizontal-scroll-bars . nil) default-frame-alist)
   (push '(menu-bar-lines . nil) default-frame-alist)
   (push '(tool-bar-lines . nil) default-frame-alist)
-  (push '(font . "HackGen35 Console NF-14") default-frame-alist)
+  (push '(font . "HackGen35 Console NF-12") default-frame-alist)
 #+end_src
