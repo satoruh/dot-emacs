@@ -2,7 +2,6 @@
 #+STARTUP: show5levels
 
 * Setup
-
 ** GCを調整して初期化中に実行されないようにする
 
 #+begin_src emacs-lisp
@@ -55,7 +54,6 @@
 #+end_src
 
 * My Functions
-
 ** user-data-directory
 
 #+begin_src emacs-lisp
@@ -87,7 +85,6 @@ markがactiveなとき（リージョンがハイライトされているとき�
 #+end_src
 
 * General
-
 ** Coding system
 
 #+begin_src emacs-lisp
@@ -233,7 +230,6 @@ markがactiveなとき（リージョンがハイライトされているとき�
 #+end_src
 
 ** Misc
-
 *** simple
 #+begin_src emacs-lisp
   (custom-set-variables
@@ -365,9 +361,7 @@ load していないので、内容は再起動時に無視される
    '(enable-recursive-minibuffers t))
 #+end_src
 
-
 * Theme and modeline
-
 ** doom-themes
 
 #+begin_src emacs-lisp
@@ -400,7 +394,6 @@ load していないので、内容は再起動時に無視される
 #+end_src
 
 * Org
-
 ** org
 
 #+begin_src emacs-lisp
@@ -595,7 +588,6 @@ GripはGitHubのAPIを呼ぶ
 #+end_src
 
 * LSP
-
 ** lsp-mode
 
 #+begin_src emacs-lisp
@@ -654,9 +646,7 @@ GripはGitHubのAPIを呼ぶ
     :after (consult lsp))
 #+end_src
 
-
 * DAP
-
 ** dap-mode
 
 #+begin_src emacs-lisp
@@ -947,6 +937,7 @@ GripはGitHubのAPIを呼ぶ
     (transient-values-file (my/user-data "transient/values.el"))
     (transient-history-file (my/user-data "transient/history.el")))
 #+end_src
+
 ** minimap
 
 #+begin_src emacs-lisp
@@ -1055,7 +1046,6 @@ Major modes for various Git configuration files.
     :custom
     (global-git-gutter-mode t))
 #+end_src
-
 
 ** magit
 
