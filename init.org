@@ -493,6 +493,7 @@ load していないので、内容は再起動時に無視される
             (bash "https://github.com/tree-sitter/tree-sitter-bash")
             (go "https://github.com/tree-sitter/tree-sitter-go")
             (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
+            (toml "https://github.com/tree-sitter/tree-sitter-toml")
             ))
     :config
     (setq major-mode-remap-alist
