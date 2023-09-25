@@ -542,7 +542,17 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
            :map org-mode-map
            ("C-*" . consult-org-heading)
-           ))
+           )
+    :custom
+    (org-agenda-files (list (expand-file-name "todo.org" org-directory) (expand-file-name "notes.org" org-directory)))
+    (org-capture-templates
+     `(("t" "todo" entry
+        (file+headline ,(expand-file-name "todo.org" org-directory) "INBOX")
+        "* TODO %?\12 %i\12 %a")
+       ("n" "note" entry
+        (file+olp+datetree ,(expand-file-name "notes.org" org-directory))
+        "* %(format-time-string \"%R \")%^{Title}\12%?")))
+    )
 #+end_src
 
 ** org-bullets
