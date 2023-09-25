@@ -559,8 +559,9 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package org-bullets
+    :disabled t
     :custom
-    (org-bullets-bullet-list '("󰎦" "󰎩" "󰎬" "󰎮" "󰎰" "󰎵" "󰎸" "󰎻" "󰎾" "󰽾"))
+    (org-bullets-bullet-list '("󰧱" "󰎦" "󰎩" "󰎬" "󰎮" "󰎰" "󰎵" "󰎸" "󰎻" "󰎾" "󰽾"))
     :hook (org-mode . org-bullets-mode))
 #+end_src
 
@@ -568,7 +569,8 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package org-modern
-    :disabled t
+    :custom
+    (org-modern-star '("󰧱" "󰎦" "󰎩" "󰎬" "󰎮" "󰎰" "󰎵" "󰎸" "󰎻" "󰎾" "󰽾"))
     :hook (org-mode . org-modern-mode)
     )
 #+end_src
