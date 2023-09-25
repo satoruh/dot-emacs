@@ -640,6 +640,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
     (lsp-completion-mode . my/lsp-mode-setup-completion)
+    ((go-mode go-ts-mode ruby-mode ruby-ts-mode terraform-mode) . lsp-deferred)
     :init
     (setq lsp-keymap-prefix "C-c C-l")
 
@@ -764,24 +765,20 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package go-mode
-    :hook
-    (go-mode . lsp-deferred))
+    :defer t)
 
   (use-package go-ts-mode
-    :hook
-    (go-ts-mode . lsp-deferred))
+    :defer t)
 #+end_src
 
 ** Ruby
 
 #+begin_src emacs-lisp
   (use-package ruby-mode
-    :hook
-    (ruby-mode . lsp-deferred))
+    :defer t)
 
   (use-package ruby-ts-mode
-    :hook
-    (ruby-ts-mode . lsp-deferred))
+    :defer t)
 #+end_src
 
 ** Protocol Buffer
@@ -819,8 +816,7 @@ terraform-lsの自動インストールはサポートされないので、下�
 
 #+begin_src emacs-lisp
   (use-package terraform-mode
-    :hook
-    (terraform-mode . lsp-deferred))
+    :defer t)
 #+end_src
 
 ** YAML
