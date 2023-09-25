@@ -909,14 +909,6 @@ GripはGitHubのAPIを呼ぶ
            ))
 #+end_src
 
-** git-gutter
-
-#+begin_src emacs-lisp
-  (use-package git-gutter
-    :custom
-    (global-git-gutter-mode t))
-#+end_src
-
 ** highlight-indent-guides
 
 #+begin_src emacs-lisp
@@ -943,28 +935,6 @@ GripはGitHubのAPIを呼ぶ
     (imenu-list-mode-line-format nil)
     :hook
     (imenu-list-major-mode . (lambda () (display-line-numbers-mode -1))))
-#+end_src
-
-** magit
-
-#+begin_src emacs-lisp
-  (use-package magit
-    :defer t
-    :custom
-    (magit-auto-revert-mode t)
-    (magit-diff-refine-hunk 'all)
-    :hook
-    (after-save . magit-after-save-refresh-status)
-    (after-save . magit-after-save-refresh-buffers))
-#+end_src
-
-*** forge
-
-#+begin_src emacs-lisp
-  (use-package forge
-    :after magit
-    :custom
-    (forge-database-file (my/user-data "forge-database.sqlite")))
 #+end_src
 
 ** transient
@@ -1067,4 +1037,35 @@ GripはGitHubのAPIを呼ぶ
     (which-key-idle-delay 0.0)
     (which-key-idle-secondary-delay 0.0)
     (which-key-popup-type 'side-window))
+#+end_src
+* Git
+** git-gutter
+
+#+begin_src emacs-lisp
+  (use-package git-gutter
+    :custom
+    (global-git-gutter-mode t))
+#+end_src
+
+
+** magit
+
+#+begin_src emacs-lisp
+  (use-package magit
+    :defer t
+    :custom
+    (magit-auto-revert-mode t)
+    (magit-diff-refine-hunk 'all)
+    :hook
+    (after-save . magit-after-save-refresh-status)
+    (after-save . magit-after-save-refresh-buffers))
+#+end_src
+
+*** forge
+
+#+begin_src emacs-lisp
+  (use-package forge
+    :after magit
+    :custom
+    (forge-database-file (my/user-data "forge-database.sqlite")))
 #+end_src
