@@ -1039,6 +1039,15 @@ GripはGitHubのAPIを呼ぶ
     (which-key-popup-type 'side-window))
 #+end_src
 * Git
+** Git Config Modes
+
+Major modes for various Git configuration files.
+
+#+begin_src emacs-lisp
+  (use-package git-mode
+    :defer t)
+#+end_src
+
 ** git-gutter
 
 #+begin_src emacs-lisp
