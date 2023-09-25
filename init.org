@@ -1026,7 +1026,6 @@ Major modes for various Git configuration files.
 
 #+begin_src emacs-lisp
   (use-package magit
-    :defer t
     :custom
     (magit-auto-revert-mode t)
     (magit-diff-refine-hunk 'all)
