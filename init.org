@@ -1030,6 +1030,15 @@ GripはGitHubのAPIを呼ぶ
     (which-key-idle-secondary-delay 0.0)
     (which-key-popup-type 'side-window))
 #+end_src
+
+** blamer
+
+#+begin_src emacs-lisp
+  (use-package blamer
+    :custom
+    (blamer-idle-time .0)
+    (global-blamer-mode t))
+#+end_src
 * Git
 ** Git Config Modes
 
