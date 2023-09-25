@@ -423,6 +423,7 @@ load していないので、内容は再起動時に無視される
 
 #+begin_src emacs-lisp
   (use-package org-modern
+    :disabled t
     :hook (org-mode . org-modern-mode)
     )
 #+end_src
