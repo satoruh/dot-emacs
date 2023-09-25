@@ -447,13 +447,16 @@ markがactiveなとき（リージョンがハイライトされているとき�
 ** all-the-icons
 
 #+begin_src emacs-lisp
-  (use-package all-the-icons)
+  (use-package all-the-icons
+    :disabled t
+    )
 #+end_src
 
 ** all-the-icons-dired
 
 #+begin_src emacs-lisp
   (use-package all-the-icons-dired
+    :disabled t
     :hook
     (dired-mode . all-the-icons-dired-mode))
 #+end_src
@@ -462,9 +465,35 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package all-the-icons-completion
+    :disabled t
     :custom
     (all-the-icons-completion-mode t)
     )
+#+end_src
+
+** nerd-icons
+
+#+begin_src emacs-lisp
+  (use-package nerd-icons
+    )
+#+end_src
+
+** nerd-icons-dired
+
+#+begin_src emacs-lisp
+  (use-package nerd-icons-dired
+    :hook
+    (dired-mode . nerd-icons-dired-mode))
+#+end_src
+
+** nerd-icons-completion
+
+#+begin_src emacs-lisp
+  (use-package nerd-icons-completion
+    :config
+    (nerd-icons-completion-mode)
+    :hook
+    (marginalia-mode . nerd-icons-completion-marginalia-setup))
 #+end_src
 
 * File tree
@@ -872,10 +901,7 @@ Major modes for various Git configuration files.
 #+begin_src emacs-lisp
   (use-package marginalia
     :custom
-    (marginalia-mode t)
-    :hook
-    (marginalia-mode . all-the-icons-completion-marginalia-setup)
-    )
+    (marginalia-mode t))
 #+end_src
 
 ** orderless
