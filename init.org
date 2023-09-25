@@ -455,20 +455,22 @@ load していないので、内容は再起動時に無視される
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package yasnippet-snippets)
+    (use-package yasnippet-snippets
+      :after yasnippet)
 #+end_src
 
 *** consult-yasnippet
 
 #+begin_src emacs-lisp
-  (use-package consult-yasnippet)
+    (use-package consult-yasnippet
+      :after (consult yasnippet))
 #+end_src
 
 *** yasnippet-capf
 
 #+begin_src emacs-lisp
   (use-package yasnippet-capf
-    :after cape
+    :after (cape yasnippet)
     :config
     (add-to-list 'completion-at-point-functions #'yasnippet-capf)
     (defun my/setup-lsp-yas-capfs ()
