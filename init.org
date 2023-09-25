@@ -53,27 +53,11 @@
     (package-upgrade-all))
 #+end_src
 
-* My Functions
-** user-data-directory
+** ignore custom-file
 
 #+begin_src emacs-lisp
-  (defconst my/user-data-directory
-    (expand-file-name "~/.local/share/emacs/"))
-
-  (defun my/user-data (name)
-    (expand-file-name name my/user-data-directory))
-#+end_src
-
-** kill-region か backward-kill-word する
-
-markがactiveなとき（リージョンがハイライトされているとき）はkill-region、そうでないときはbackward-kill-wordする
-
-#+begin_src emacs-lisp
-  (defun my/kill-region-or-backward-kill-word (&optional arg)
-    (interactive "p")
-    (if (region-active-p)
-        (call-interactively #'kill-region)
-      (backward-kill-word arg)))
+  (custom-set-variables
+   '(custom-file (expand-file-name "custom.el" user-emacs-directory)))
 #+end_src
 
 * Load local init file
@@ -85,6 +69,50 @@ markがactiveなとき（リージョンがハイライトされているとき�
 #+end_src
 
 * General
+** keep user-emacs-directory clean
+
+#+begin_src emacs-lisp
+  (defconst my/user-data-directory
+    (expand-file-name "~/.local/share/emacs/"))
+
+  (defun my/user-data (name)
+    (expand-file-name name my/user-data-directory))
+#+end_src
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(auto-save-list-file-prefix (my/user-data "auto-save-list/.saves-"))
+   '(bookmark-default-file (my/user-data "bookmarks"))
+   '(project-list-file (my/user-data "projects"))
+   '(recentf-save-file (my/user-data "recentf"))
+   '(savehist-file (my/user-data "history"))
+
+   ;; transient
+   '(transient-levels-file (my/user-data "transient/levels.el"))
+   '(transient-values-file (my/user-data "transient/values.el"))
+   '(transient-history-file (my/user-data "transient/history.el"))
+
+   ;; treemacs
+   '(treemacs-persist-file (my/user-data "treemacs-persist"))
+   '(treemacs-last-error-persist-file (my/user-data "treemacs-persist-at-last-error"))
+
+   ;; org-persist
+   '(org-persist-directory (my/user-data "org-persist/"))
+
+   ;; lsp-mode
+   '(lsp-session-file (my/user-data "lsp-session"))
+
+   ;; forge
+   '(forge-database-file (my/user-data "forge-database.sqlite"))
+
+   ;; dap-mode
+   '(dap-breakpoints-file (my/user-data "dap-breakpoints"))
+
+   ;; yasnippet
+   '(yas-snippet-dirs (list (my/user-data "snippets")))
+   )
+#+end_src
+
 ** Coding system
 
 #+begin_src emacs-lisp
@@ -139,8 +167,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
    '(scroll-bar-mode nil)
    '(horizontal-scroll-bar-mode nil)
    '(menu-bar-mode nil)
-   '(tool-bar-mode nil)
-   )
+   '(tool-bar-mode nil))
 #+end_src
 
 *** Tab bar
@@ -150,66 +177,6 @@ markがactiveなとき（リージョンがハイライトされているとき�
    '(tab-bar-tab-hints t)
    '(tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
    '(tab-bar-close-button-show nil))
-#+end_src
-
-*** カーソルを点滅させない
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(blink-cursor-mode nil))
-#+end_src
-
-*** 行番号を表示する
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(global-display-line-numbers-mode t)
-   '(display-line-numbers-widen t))
-#+end_src
-
-*** show-paren
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(show-paren-mode t)
-   '(show-paren-delay 0)
-   '(show-paren-style 'mixed)
-   '(show-paren-when-point-in-periphery t)
-   '(show-paren-when-point-inside-paren t))
-#+end_src
-
-*** show-trailing-whitespace
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(show-trailing-whitespace t))
-#+end_src
-
-*** indicate-empty-lines
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(indicate-empty-lines t))
-#+end_src
-
-*** indicate-buffer-boundaries
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(indicate-buffer-boudaries 'left))
-#+end_src
-
-*** 保存時に末尾のスペースを削除する
-
-#+begin_src emacs-lisp
-  (add-hook 'before-save-hook #'delete-trailing-whitespace)
-#+end_src
-
-*** visible bell
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(visible-bell t))
 #+end_src
 
 ** Global keybinds
@@ -229,84 +196,35 @@ markがactiveなとき（リージョンがハイライトされているとき�
   (global-set-key (kbd "M-O") #'(lambda () (interactive) (other-window -1)))
 #+end_src
 
+** which-key
+
+#+begin_src emacs-lisp
+  (use-package which-key
+    :custom
+    (which-key-mode t)
+    (which-key-idle-delay 0.0)
+    (which-key-idle-secondary-delay 0.0)
+    (which-key-popup-type 'side-window))
+#+end_src
+
 ** Misc
-*** simple
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(indent-tabs-mode nil)
-   '(kill-whole-line t)
-   '(track-eol t)
-   '(line-move-visual nil)
-   '(line-number-mode nil)
-   '(column-number-mode nil)
-   )
-#+end_src
-
-#+end_src
-
-*** files
 
 #+begin_src emacs-lisp
   (custom-set-variables
-   '(require-final-newline t))
-#+end_src
-
-*** custom-fileを設定する
-
-user-init-file (init.el) に書かないようにする
-load していないので、内容は再起動時に無視される
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(custom-file (expand-file-name "custom.el" user-emacs-directory)))
-#+end_src
-
-*** autorevert
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(global-auto-revert-mode t))
-#+end_src
-
-*** recentf
-
-#+begin_src emacs-lisp
-  (custom-set-variables
+   '(global-auto-revert-mode t)
    '(recentf-mode t)
    '(recentf-max-saved-items nil)
-   '(recentf-save-file (my/user-data "recentf")))
+   '(savehist-mode t))
 #+end_src
 
-*** savehist
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(savehist-mode t)
-   '(savehist-file (my/user-data "history")))
-#+end_src
-
-*** bookmark
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(bookmark-default-file (my/user-data "bookmarks")))
-#+end_src
-
-*** dired
+** dired
 
 #+begin_src emacs-lisp
   (with-eval-after-load 'dired
     (define-key dired-mode-map (kbd "e") #'wdired-change-to-wdired-mode))
 #+end_src
 
-*** project
-
-#+begin_src emacs-lisp
-  (use-package project
-    :custom
-    (project-list-file (my/user-data "projects")))
-#+end_src
-
-*** xwidget
+** xwidget
 
 #+begin_src emacs-lisp
   (use-package xwidget
@@ -315,35 +233,21 @@ load していないので、内容は再起動時に無視される
     (xwidget-webkit-mode . (lambda () (display-line-numbers-mode -1))))
 #+end_src
 
-*** which-func
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(which-function-mode t))
-#+end_src
-
-*** compile
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(compilation-scroll-output 'first-error))
-#+end_src
-
-*** warnings
+** warnings
 
 #+begin_src emacs-lisp
   (custom-set-variables
    '(warning-suppress-types '((comp))))
 #+end_src
 
-*** enable narrowing
+** enable narrowing
 
 #+begin_src emacs-lisp
   (put 'narrow-to-region 'disabled nil)
   (put 'narrow-to-page 'disabled nil)
 #+end_src
 
-*** server
+** server
 
 #+begin_src emacs-lisp
   (use-package server
@@ -351,14 +255,51 @@ load していないので、内容は再起動時に無視される
     (after-init . server-start))
 #+end_src
 
-*** others
+** others
 
 #+begin_src emacs-lisp
   (custom-set-variables
    ;; C source code
    '(history-delete-duplicates t)
-   '(auto-save-list-file-prefix (my/user-data "auto-save-list/.saves-"))
    '(enable-recursive-minibuffers t))
+#+end_src
+
+** ffap
+
+#+begin_src emacs-lisp
+  (use-package ffap
+    :bind (nil
+           ("C-c v" . ffap)
+           )
+    )
+#+end_src
+
+** open-junk-file
+
+#+begin_src emacs-lisp
+  (use-package open-junk-file
+    :bind (nil
+           ("C-c j" . open-junk-file)
+           )
+    :custom
+    (open-junk-file-format "~/junk/%Y/%m/%d-%H%M%S." t)
+    )
+#+end_src
+
+** browse-at-remote
+
+#+begin_src emacs-lisp
+  (use-package browse-at-remote
+    :bind (nil
+           ("C-c u" . browse-url-at-point))
+    :commands browse-at-remote-get-url)
+#+end_src
+
+** transient
+
+#+begin_src emacs-lisp
+  (use-package transient
+    :defer t)
 #+end_src
 
 * Theme and modeline
@@ -393,6 +334,174 @@ load していないので、内容は再起動時に無視される
     (minions-mode t))
 #+end_src
 
+* Editor
+** default
+#+begin_src emacs-lisp
+  (add-hook 'before-save-hook #'delete-trailing-whitespace)
+
+  (custom-set-variables
+   '(indent-tabs-mode nil)
+   '(kill-whole-line t)
+   '(track-eol t)
+   '(line-move-visual nil)
+   '(require-final-newline t)
+   '(blink-cursor-mode nil)
+   '(line-number-mode nil)
+   '(column-number-mode nil)
+   '(global-display-line-numbers-mode t)
+   '(display-line-numbers-widen t)
+   '(show-trailing-whitespace t)
+   '(indicate-buffer-boudaries 'left)
+   '(indicate-empty-lines t)
+   '(visible-bell t)
+   '(show-paren-mode t)
+   '(show-paren-delay 0)
+   '(show-paren-style 'mixed)
+   '(show-paren-when-point-in-periphery t)
+   '(show-paren-when-point-inside-paren t)
+   '(which-function-mode t))
+#+end_src
+
+** kill-region か backward-kill-word する
+
+markがactiveなとき（リージョンがハイライトされているとき）はkill-region、そうでないときはbackward-kill-wordする
+
+#+begin_src emacs-lisp
+  (defun my/kill-region-or-backward-kill-word (&optional arg)
+    (interactive "p")
+    (if (region-active-p)
+        (call-interactively #'kill-region)
+      (backward-kill-word arg)))
+#+end_src
+
+** highlight-indent-guides
+
+#+begin_src emacs-lisp
+  (use-package highlight-indent-guides
+    :hook
+    ((prog-mode yaml-mode) . highlight-indent-guides-mode)
+    :custom
+    (highlight-indent-guides-auto-enabled t)
+    (highlight-indent-guides-responsive 'stack)
+    (highlight-indent-guides-method 'column)
+    )
+#+end_src
+
+** volatile-highlights
+
+#+begin_src emacs-lisp
+  (use-package volatile-highlights
+    :custom
+    (volatile-highlights-mode t)
+    :custom-face
+    (vhl/default-face ((nil (:foreground "red" :background "yellow"))))
+    )
+#+end_src
+
+** beacon
+
+#+begin_src emacs-lisp
+  (use-package beacon
+    :custom
+    (beacon-mode t)
+    (beacon-color "yellow")
+    )
+#+end_src
+
+** change-inner
+
+#+begin_src emacs-lisp
+  (use-package change-inner
+    :bind (nil
+           ("M-i" . change-inner)         ;orig.tabs-to-tab-stop
+           )
+    )
+#+end_src
+
+** git-gutter
+
+#+begin_src emacs-lisp
+  (use-package git-gutter
+    :custom
+    (global-git-gutter-mode t))
+#+end_src
+
+** blamer
+
+#+begin_src emacs-lisp
+  (use-package blamer
+    :custom
+    (blamer-idle-time .3)
+    (global-blamer-mode t))
+#+end_src
+
+** rainbow-delimiters
+
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :hook
+    (prog-mode . rainbow-delimiters-mode)
+    )
+#+end_src
+
+** all-the-icons
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons)
+#+end_src
+
+** all-the-icons-dired
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons-dired
+    :hook
+    (dired-mode . all-the-icons-dired-mode))
+#+end_src
+
+** all-the-icons-completion
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons-completion
+    :custom
+    (all-the-icons-completion-mode t)
+    )
+#+end_src
+
+* File tree
+** treemacs
+
+#+begin_src emacs-lisp
+  (use-package treemacs
+    :disabled t
+    :bind (nil
+           ("M-0" . treemacs-select-window)
+           )
+    :custom
+    (treemacs-collapse-dirs 3)
+    (treemacs-filewatch-mode t)
+    (treemacs-follow-mode t)
+    (treemacs-git-commit-diff-mode t)
+    (treemacs-git-mode t)
+    (treemacs-is-never-other-window t)
+    (treemacs-missing-project-action 'keep)
+    :hook
+    (treemacs-mode . (lambda () (display-line-numbers-mode -1))))
+
+  (use-package treemacs-all-the-icons
+    :after (treemacs all-the-icons)
+    :disabled t
+    :config
+    (treemacs-load-theme "all-the-icons"))
+
+  (use-package treemacs-tab-bar
+    :after treemacs
+    :disabled t)
+
+  (use-package treemacs-magit
+    :after (treemacs magit)
+    :disabled t)
+#+end_src
+
 * Org
 ** org
 
@@ -404,10 +513,7 @@ load していないので、内容は再起動時に無視される
 
            :map org-mode-map
            ("C-*" . consult-org-heading)
-           )
-    :custom
-    ;; org-persist
-    (org-persist-directory (my/user-data "org-persist/")))
+           ))
 #+end_src
 
 ** org-bullets
@@ -429,7 +535,6 @@ load していないので、内容は再起動時に無視される
 #+end_src
 
 ** org-babel
-
 *** ob-go
 
 #+begin_src emacs-lisp
@@ -440,7 +545,132 @@ load していないので、内容は再起動時に無視される
                                  '((go . t))))
 #+end_src
 
-* Prog
+* Programming
+** general
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(compilation-scroll-output 'first-error))
+#+end_src
+
+** flycheck
+
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :custom
+    (global-flycheck-mode t)
+    (flycheck-display-errors-delay .0))
+#+end_src
+
+*** consult-flycheck
+
+#+begin_src emacs-lisp
+  (use-package consult-flycheck
+    :after (consult flycheck)
+    :bind (nil
+           :map flycheck-mode-map
+           ([remap flycheck-list-errors] . consult-flycheck)
+           ))
+#+end_src
+
+** imenu-list
+
+#+begin_src emacs-lisp
+  (use-package imenu-list
+    :bind (nil
+           ("C-'" . #'imenu-list-smart-toggle)
+           )
+    :custom
+    (imenu-list-focus-after-activation nil)
+    (imenu-list-idle-update-delay 0.0)
+    (imenu-list-mode-line-format nil)
+    :hook
+    (imenu-list-major-mode . (lambda () (display-line-numbers-mode -1))))
+#+end_src
+
+** minimap
+
+#+begin_src emacs-lisp
+  (use-package minimap
+    :defer t
+    :custom
+    (minimap-automatically-delete-window nil)
+    (minimap-update-delay 0)
+    (minimap-window-location 'right)
+    (minimap-major-modes '(prog-mode org-mode))
+    )
+#+end_src
+
+** LSP
+*** lsp-mode
+
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    :custom
+    (lsp-completion-provider :none)
+    :hook
+    (lsp-mode . lsp-enable-which-key-integration)
+    (lsp-completion-mode . my/lsp-mode-setup-completion)
+    :init
+    (setq lsp-keymap-prefix "C-c C-l")
+
+    (defun my/lsp-mode-setup-completion ()
+      (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+            '(orderless)
+            ))
+    )
+#+end_src
+
+**** lsp-ui
+
+#+begin_src emacs-lisp
+  (use-package lsp-ui
+    :after lsp-mode
+    :bind (nil
+           :map lsp-mode-map
+           ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+           ([remap xref-find-references] . lsp-ui-peek-find-references)
+           )
+    :custom
+    ;; lsp-ui-sideline
+    (lsp-ui-sideline-enable t)
+    (lsp-ui-sideline-delay 0)
+    (lsp-ui-sideline-show-hover t)
+    ;; lsp-ui-peek
+    (lsp-ui-peek-enable t)
+    (lsp-ui-peek-always-show t)
+    ;; lsp-ui-doc
+    (lsp-ui-doc-enable t)
+    (lsp-ui-doc-delay 0)
+    (lsp-ui-doc-header t)
+    (lsp-ui-doc-include-signature t)
+    (lsp-ui-doc-position 'bottom)
+    (lsp-ui-doc-use-childframe t)
+    ;; lsp-ui-imenu
+    (lsp-ui-imenu-auto-refresh t)
+    (lsp-ui-imenu-auto-refresh-delay 0.0)
+    )
+#+end_src
+
+**** consult-lsp
+
+#+begin_src emacs-lisp
+  (use-package consult-lsp
+    :after (consult lsp))
+#+end_src
+
+** DAP
+*** dap-mode
+
+#+begin_src emacs-lisp
+  (use-package dap-mode
+    :after lsp-mode
+    :config
+    (dap-auto-configure-mode t)
+    (require 'dap-hydra)
+    (require 'dap-dlv-go))
+#+end_src
+
 ** Yasnippet
 
 #+begin_src emacs-lisp
@@ -455,15 +685,15 @@ load していないので、内容は再起動時に無視される
 #+end_src
 
 #+begin_src emacs-lisp
-    (use-package yasnippet-snippets
-      :after yasnippet)
+  (use-package yasnippet-snippets
+    :after yasnippet)
 #+end_src
 
 *** consult-yasnippet
 
 #+begin_src emacs-lisp
-    (use-package consult-yasnippet
-      :after (consult yasnippet))
+  (use-package consult-yasnippet
+    :after (consult yasnippet))
 #+end_src
 
 *** yasnippet-capf
@@ -477,7 +707,7 @@ load していないので、内容は再起動時に無視される
       (setq-local completion-at-point-functions (list (cape-capf-super #'lsp-completion-at-point #'yasnippet-capf))))
     :hook
     (lsp-completion-mode . my/setup-lsp-yas-capfs)
-  )
+    )
 #+end_src
 
 ** Tree-Sitter
@@ -495,11 +725,12 @@ load していないので、内容は再起動時に無視される
     (setq major-mode-remap-alist
           '((go-mode . go-ts-mode)
             (ruby-mode . ruby-ts-mode))
-    )
+          )
     :custom
     (treesit-font-lock-level 4))
 #+end_src
 
+* Programming and Markup languages
 ** Go
 
 #+begin_src emacs-lisp
@@ -590,75 +821,14 @@ GripはGitHubのAPIを呼ぶ
            ("g" . grip-mode)))
 #+end_src
 
-* LSP
-** lsp-mode
+* Configuration files
+** Git Config Modes
+
+Major modes for various Git configuration files.
 
 #+begin_src emacs-lisp
-  (use-package lsp-mode
-    :custom
-    (lsp-completion-provider :none)
-    (lsp-session-file (my/user-data "lsp-session"))
-    :hook
-    (lsp-mode . lsp-enable-which-key-integration)
-    (lsp-completion-mode . my/lsp-mode-setup-completion)
-    :init
-    (setq lsp-keymap-prefix "C-c C-l")
-
-    (defun my/lsp-mode-setup-completion ()
-      (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-            '(orderless)
-            ))
-    )
-#+end_src
-
-** lsp-ui
-
-#+begin_src emacs-lisp
-  (use-package lsp-ui
-    :after lsp-mode
-    :bind (nil
-           :map lsp-mode-map
-           ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-           ([remap xref-find-references] . lsp-ui-peek-find-references)
-           )
-    :custom
-    ;; lsp-ui-sideline
-    (lsp-ui-sideline-enable t)
-    (lsp-ui-sideline-delay 0)
-    (lsp-ui-sideline-show-hover t)
-    ;; lsp-ui-peek
-    (lsp-ui-peek-enable t)
-    (lsp-ui-peek-always-show t)
-    ;; lsp-ui-doc
-    (lsp-ui-doc-enable t)
-    (lsp-ui-doc-delay 0)
-    (lsp-ui-doc-header t)
-    (lsp-ui-doc-include-signature t)
-    (lsp-ui-doc-position 'bottom)
-    (lsp-ui-doc-use-childframe t)
-    ;; lsp-ui-imenu
-    (lsp-ui-imenu-auto-refresh t)
-    (lsp-ui-imenu-auto-refresh-delay 0.0)
-    )
-#+end_src
-
-** consult-lsp
-
-#+begin_src emacs-lisp
-  (use-package consult-lsp
-    :after (consult lsp))
-#+end_src
-
-* DAP
-** dap-mode
-
-#+begin_src emacs-lisp
-  (use-package dap-mode
-    :after lsp-mode
-    :config
-    (dap-auto-configure-mode t)
-    (require 'dap-hydra)
-    (require 'dap-dlv-go))
+  (use-package git-mode
+    :defer t)
 #+end_src
 
 * Completion
@@ -819,246 +989,7 @@ GripはGitHubのAPIを呼ぶ
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
 
-* Packages
-** all-the-icons
-
-#+begin_src emacs-lisp
-  (use-package all-the-icons)
-#+end_src
-
-** all-the-icons-dired
-
-#+begin_src emacs-lisp
-  (use-package all-the-icons-dired
-    :hook
-    (dired-mode . all-the-icons-dired-mode))
-#+end_src
-
-** all-the-icons-completion
-
-#+begin_src emacs-lisp
-  (use-package all-the-icons-completion
-    :custom
-    (all-the-icons-completion-mode t)
-    )
-#+end_src
-
-** beacon
-
-#+begin_src emacs-lisp
-  (use-package beacon
-    :custom
-    (beacon-mode t)
-    (beacon-color "yellow")
-    )
-#+end_src
-
-** browse-at-remote
-
-#+begin_src emacs-lisp
-  (use-package browse-at-remote
-    :bind (nil
-           ("C-c u" . browse-url-at-point))
-    :commands browse-at-remote-get-url)
-#+end_src
-
-** change-inner
-
-#+begin_src emacs-lisp
-  (use-package change-inner
-    :bind (nil
-           ("M-i" . change-inner)         ;orig.tabs-to-tab-stop
-           )
-    )
-#+end_src
-
-** ffap
-
-#+begin_src emacs-lisp
-  (use-package ffap
-    :bind (nil
-           ("C-c v" . ffap)
-           )
-    )
-#+end_src
-
-** flycheck
-
-#+begin_src emacs-lisp
-  (use-package flycheck
-    :custom
-    (global-flycheck-mode t)
-    (flycheck-display-errors-delay .0))
-#+end_src
-
-*** consult-flycheck
-
-#+begin_src emacs-lisp
-  (use-package consult-flycheck
-    :after (consult flycheck)
-    :bind (nil
-           :map flycheck-mode-map
-           ([remap flycheck-list-errors] . consult-flycheck)
-           ))
-#+end_src
-
-** highlight-indent-guides
-
-#+begin_src emacs-lisp
-  (use-package highlight-indent-guides
-    :hook
-    ((prog-mode yaml-mode) . highlight-indent-guides-mode)
-    :custom
-    (highlight-indent-guides-auto-enabled t)
-    (highlight-indent-guides-responsive 'stack)
-    (highlight-indent-guides-method 'column)
-    )
-#+end_src
-
-** imenu-list
-
-#+begin_src emacs-lisp
-  (use-package imenu-list
-    :bind (nil
-           ("C-'" . #'imenu-list-smart-toggle)
-           )
-    :custom
-    (imenu-list-focus-after-activation nil)
-    (imenu-list-idle-update-delay 0.0)
-    (imenu-list-mode-line-format nil)
-    :hook
-    (imenu-list-major-mode . (lambda () (display-line-numbers-mode -1))))
-#+end_src
-
-** transient
-
-#+begin_src emacs-lisp
-  (use-package transient
-    :defer t
-    :custom
-    (transient-levels-file (my/user-data "transient/levels.el"))
-    (transient-values-file (my/user-data "transient/values.el"))
-    (transient-history-file (my/user-data "transient/history.el")))
-#+end_src
-
-** minimap
-
-#+begin_src emacs-lisp
-  (use-package minimap
-    :defer t
-    :custom
-    (minimap-automatically-delete-window nil)
-    (minimap-update-delay 0)
-    (minimap-window-location 'right)
-    (minimap-major-modes '(prog-mode org-mode))
-    )
-#+end_src
-
-** open-junk-file
-
-#+begin_src emacs-lisp
-  (use-package open-junk-file
-    :bind (nil
-           ("C-c j" . open-junk-file)
-           )
-    :custom
-    (open-junk-file-format "~/junk/%Y/%m/%d-%H%M%S." t)
-    )
-#+end_src
-
-** rainbow-delimiters
-
-#+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-    :hook
-    (prog-mode . rainbow-delimiters-mode)
-    )
-#+end_src
-
-** treemacs
-
-#+begin_src emacs-lisp
-  (use-package treemacs
-    :disabled t
-    :bind (nil
-           ("M-0" . treemacs-select-window)
-           )
-    :custom
-    (treemacs-collapse-dirs 3)
-    (treemacs-filewatch-mode t)
-    (treemacs-follow-mode t)
-    (treemacs-git-commit-diff-mode t)
-    (treemacs-git-mode t)
-    (treemacs-is-never-other-window t)
-    (treemacs-missing-project-action 'keep)
-    (treemacs-persist-file (my/user-data "treemacs-persist"))
-    (treemacs-last-error-persist-file (my/user-data "treemacs-persist-at-last-error"))
-    :hook
-    (treemacs-mode . (lambda () (display-line-numbers-mode -1))))
-
-  (use-package treemacs-all-the-icons
-    :after (treemacs all-the-icons)
-    :disabled t
-    :config
-    (treemacs-load-theme "all-the-icons"))
-
-  (use-package treemacs-tab-bar
-    :after treemacs
-    :disabled t)
-
-  (use-package treemacs-magit
-    :after (treemacs magit)
-    :disabled t)
-#+end_src
-
-** volatile-highlights
-
-#+begin_src emacs-lisp
-  (use-package volatile-highlights
-    :custom
-    (volatile-highlights-mode t)
-    :custom-face
-    (vhl/default-face ((nil (:foreground "red" :background "yellow"))))
-    )
-#+end_src
-
-** which-key
-
-#+begin_src emacs-lisp
-  (use-package which-key
-    :custom
-    (which-key-mode t)
-    (which-key-idle-delay 0.0)
-    (which-key-idle-secondary-delay 0.0)
-    (which-key-popup-type 'side-window))
-#+end_src
-
-** blamer
-
-#+begin_src emacs-lisp
-  (use-package blamer
-    :custom
-    (blamer-idle-time .0)
-    (global-blamer-mode t))
-#+end_src
 * Git
-** Git Config Modes
-
-Major modes for various Git configuration files.
-
-#+begin_src emacs-lisp
-  (use-package git-mode
-    :defer t)
-#+end_src
-
-** git-gutter
-
-#+begin_src emacs-lisp
-  (use-package git-gutter
-    :custom
-    (global-git-gutter-mode t))
-#+end_src
-
 ** magit
 
 #+begin_src emacs-lisp
@@ -1072,11 +1003,9 @@ Major modes for various Git configuration files.
     (after-save . magit-after-save-refresh-buffers))
 #+end_src
 
-*** forge
+** forge
 
 #+begin_src emacs-lisp
   (use-package forge
-    :after magit
-    :custom
-    (forge-database-file (my/user-data "forge-database.sqlite")))
+    :after magit)
 #+end_src
