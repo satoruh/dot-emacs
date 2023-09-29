@@ -864,7 +864,7 @@ GripはGitHubのAPIを呼ぶ
 Major modes for various Git configuration files.
 
 #+begin_src emacs-lisp
-  (use-package git-mode
+  (use-package git-modes
     :defer t)
 #+end_src
 
