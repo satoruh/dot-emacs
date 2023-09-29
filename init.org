@@ -1034,6 +1034,9 @@ Major modes for various Git configuration files.
     :hook
     (after-save . magit-after-save-refresh-status)
     (after-save . magit-after-save-refresh-buffers))
+
+  (with-eval-after-load 'project
+    (require 'magit-extras))
 #+end_src
 
 ** forge
