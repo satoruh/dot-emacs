@@ -383,6 +383,23 @@
    '(which-function-mode t))
 #+end_src
 
+*** disable show-trailing-whitespace
+
+#+begin_src emacs-lisp
+  (defun my/disable-show-trailing-whitespace ()
+    (setq show-trailing-whitespace nil))
+
+  (defvar my/disable-show-trailing-whitespace-modes
+    '(vc-annotate-mode
+      ))
+
+  (mapc
+   (lambda (mode)
+     (add-hook (intern (concat (symbol-name mode) "-hook"))
+               #'my/disable-show-trailing-whitespace))
+   my/disable-show-trailing-whitespace-modes)
+#+end_src
+
 ** kill-region か backward-kill-word する
 
 markがactiveなとき（リージョンがハイライトされているとき）はkill-region、そうでないときはbackward-kill-wordする
