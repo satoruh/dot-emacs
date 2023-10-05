@@ -110,6 +110,9 @@
 
    ;; yasnippet
    '(yas-snippet-dirs (list (my/user-data "snippets")))
+
+   ;; annotate
+   '(annotate-file (my/user-data "annotation"))
    )
 #+end_src
 
@@ -494,6 +497,12 @@ markがactiveなとき（リージョンがハイライトされているとき�
     (nerd-icons-completion-mode)
     :hook
     (marginalia-mode . nerd-icons-completion-marginalia-setup))
+#+end_src
+
+** annotate
+
+#+begin_src emacs-lisp
+  (use-package annotate)
 #+end_src
 
 * File tree
