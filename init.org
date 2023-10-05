@@ -310,6 +310,7 @@
 
 #+begin_src emacs-lisp
   (use-package doom-themes
+    :disabled t
     :config
     (load-theme 'doom-dracula t)
     (doom-themes-org-config)
@@ -320,6 +321,7 @@
 
 #+begin_src emacs-lisp
   (use-package doom-modeline
+    :disabled t
     :custom
     (doom-modeline-buffer-file-name-style 'truncate-with-project)
     (doom-modeline-icon t)
@@ -328,6 +330,22 @@
     (after-init . doom-modeline-mode)
     )
 #+end_src
+
+** spacemacs-theme
+
+#+begin_src emacs-lisp
+  (use-package spacemacs-theme
+    :config
+    (load-theme 'spacemacs-light t))
+#+end_src
+
+** spaceline
+
+  #+begin_src emacs-lisp
+    (use-package spaceline
+      :config
+      (spaceline-emacs-theme))
+  #+end_src
 
 ** minions
 
