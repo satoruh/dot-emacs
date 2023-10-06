@@ -195,8 +195,7 @@
   (global-set-key (kbd "C-w") 'my/kill-region-or-backward-kill-word) ;orig. kill-region
   (global-set-key (kbd "C-x k") 'kill-current-buffer) ;orig. kill-buffer
   (global-set-key (kbd "C-x M-c") 'restart-emacs)
-  (global-set-key (kbd "M-o") 'other-window)
-  (global-set-key (kbd "M-O") #'(lambda () (interactive) (other-window -1)))
+  (global-set-key (kbd "C-;") 'other-window)
 #+end_src
 
 ** which-key
@@ -452,6 +451,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
   (use-package change-inner
     :bind (nil
            ("M-i" . change-inner)         ;orig.tabs-to-tab-stop
+           ("M-o" . change-outer)
            )
     )
 #+end_src
