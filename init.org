@@ -390,6 +390,7 @@
 
   (defvar my/disable-show-trailing-whitespace-modes
     '(vc-annotate-mode
+      term-mode
       ))
 
   (mapc
