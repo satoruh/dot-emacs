@@ -690,6 +690,9 @@ markがactiveなとき（リージョンがハイライトされているとき�
 ** LSP
 *** lsp-mode
 
+- serve-d
+https://github.com/Pure-D/serve-d/blob/master/README.md#installation
+
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :custom
@@ -697,7 +700,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
     (lsp-completion-mode . my/lsp-mode-setup-completion)
-    ((go-mode go-ts-mode ruby-mode ruby-ts-mode terraform-mode) . lsp-deferred)
+    ((go-mode go-ts-mode ruby-mode ruby-ts-mode terraform-mode d-mode) . lsp-deferred)
     :init
     (setq lsp-keymap-prefix "C-c C-l")
 
@@ -836,6 +839,13 @@ markがactiveなとき（リージョンがハイライトされているとき�
     :defer t)
 
   (use-package ruby-ts-mode
+    :defer t)
+#+end_src
+
+** D
+
+#+begin_src emacs-lisp
+  (use-package d-mode
     :defer t)
 #+end_src
 
