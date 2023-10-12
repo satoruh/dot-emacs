@@ -849,6 +849,13 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
     :defer t)
 #+end_src
 
+** Elm
+
+#+begin_src emacs-lisp
+  (use-package elm-mode
+    :defer t)
+#+end_src
+
 ** Protocol Buffer
 
 #+begin_src emacs-lisp
