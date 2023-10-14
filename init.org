@@ -56,8 +56,11 @@
 ** ignore custom-file
 
 #+begin_src emacs-lisp
-  (custom-set-variables
-   '(custom-file (expand-file-name "custom.el" user-emacs-directory)))
+  (use-package cus-edit
+    :ensure nil
+    :defer t
+    :custom
+    (custom-file (expand-file-name "custom.el" user-emacs-directory)))
 #+end_src
 
 * Load local init file
@@ -126,7 +129,9 @@
   (set-selection-coding-system 'utf-8-unix)
 #+end_src
 
-** exec-path
+** PATH
+
+*** exec-path-from-shell
 
 #+begin_src emacs-lisp
   (use-package exec-path-from-shell
@@ -139,7 +144,7 @@
     )
 #+end_src
 
-** asdf
+*** asdf
 
 #+begin_src emacs-lisp
   (use-package asdf
@@ -152,34 +157,58 @@
     (asdf-binary "/opt/homebrew/opt/asdf/libexec/bin/asdf"))
 #+end_src
 
-** Frames and display settings
-*** startup
+** startup
 
 #+begin_src emacs-lisp
-  (custom-set-variables
-   '(inhibit-startup-screen t)
-   '(inhibit-startup-echo-area-message t)
-   '(initial-scratch-message nil)
-   '(initial-major-mode 'org-mode))
+  (use-package startup
+    :ensure nil
+    :defer t
+    :custom
+    (inhibit-startup-screen t)
+    (inhibit-startup-echo-area-message t)
+    (initial-scratch-message nil)
+    (initial-major-mode 'org-mode))
 #+end_src
 
-*** スクロールバーなどを表示しない
+** Frames and display settings
+
+*** frame
+
+#+begin_src emacs-lisp
+  (use-package frame
+    :ensure nil
+    :defer t
+    :custom
+    (blink-cursor-mode nil))
+#+end_src
+
+*** メニューバーなどを表示しない
 
 #+begin_src emacs-lisp
   (custom-set-variables
-   '(scroll-bar-mode nil)
-   '(horizontal-scroll-bar-mode nil)
    '(menu-bar-mode nil)
    '(tool-bar-mode nil))
 #+end_src
 
-*** Tab bar
+*** scroll-bar
 
 #+begin_src emacs-lisp
-  (custom-set-variables
-   '(tab-bar-tab-hints t)
-   '(tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
-   '(tab-bar-close-button-show nil))
+  (use-package scroll-bar
+    :ensure nil
+    :custom
+    (scroll-bar-mode nil)
+    (horizontal-scroll-bar-mode nil))
+#+end_src
+
+*** tab-bar
+
+#+begin_src emacs-lisp
+  (use-package tab-bar
+    :ensure nil
+    :custom
+    (tab-bar-tab-hints t)
+    (tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
+    (tab-bar-close-button-show nil))
 #+end_src
 
 ** Global keybinds
@@ -209,16 +238,6 @@
     (which-key-popup-type 'side-window))
 #+end_src
 
-** Misc
-
-#+begin_src emacs-lisp
-  (custom-set-variables
-   '(global-auto-revert-mode t)
-   '(recentf-mode t)
-   '(recentf-max-saved-items nil)
-   '(savehist-mode t))
-#+end_src
-
 ** dired
 
 #+begin_src emacs-lisp
@@ -242,13 +261,6 @@
    '(warning-suppress-types '((comp))))
 #+end_src
 
-** enable narrowing
-
-#+begin_src emacs-lisp
-  (put 'narrow-to-region 'disabled nil)
-  (put 'narrow-to-page 'disabled nil)
-#+end_src
-
 ** server
 
 #+begin_src emacs-lisp
@@ -264,44 +276,6 @@
    ;; C source code
    '(history-delete-duplicates t)
    '(enable-recursive-minibuffers t))
-#+end_src
-
-** ffap
-
-#+begin_src emacs-lisp
-  (use-package ffap
-    :bind (nil
-           ("C-c v" . ffap)
-           )
-    )
-#+end_src
-
-** open-junk-file
-
-#+begin_src emacs-lisp
-  (use-package open-junk-file
-    :bind (nil
-           ("C-c j" . open-junk-file)
-           )
-    :custom
-    (open-junk-file-format "~/junk/%Y/%m/%d-%H%M%S." t)
-    )
-#+end_src
-
-** browse-at-remote
-
-#+begin_src emacs-lisp
-  (use-package browse-at-remote
-    :bind (nil
-           ("C-c u" . browse-url-at-point))
-    :commands browse-at-remote-get-url)
-#+end_src
-
-** transient
-
-#+begin_src emacs-lisp
-  (use-package transient
-    :defer t)
 #+end_src
 
 * Theme and modeline
@@ -360,26 +334,11 @@
   (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
   (custom-set-variables
-   '(indent-tabs-mode nil)
-   '(kill-whole-line t)
-   '(track-eol t)
-   '(line-move-visual nil)
-   '(require-final-newline t)
-   '(blink-cursor-mode nil)
-   '(line-number-mode nil)
-   '(column-number-mode nil)
-   '(global-display-line-numbers-mode t)
    '(display-line-numbers-widen t)
    '(show-trailing-whitespace t)
    '(indicate-buffer-boudaries 'left)
    '(indicate-empty-lines t)
-   '(visible-bell t)
-   '(show-paren-mode t)
-   '(show-paren-delay 0)
-   '(show-paren-style 'mixed)
-   '(show-paren-when-point-in-periphery t)
-   '(show-paren-when-point-inside-paren t)
-   '(which-function-mode t))
+   '(visible-bell t))
 #+end_src
 
 *** disable show-trailing-whitespace
@@ -400,6 +359,13 @@
    my/disable-show-trailing-whitespace-modes)
 #+end_src
 
+** enable narrowing
+
+#+begin_src emacs-lisp
+  (put 'narrow-to-region 'disabled nil)
+  (put 'narrow-to-page 'disabled nil)
+#+end_src
+
 ** kill-region か backward-kill-word する
 
 markがactiveなとき（リージョンがハイライトされているとき）はkill-region、そうでないときはbackward-kill-wordする
@@ -410,6 +376,83 @@ markがactiveなとき（リージョンがハイライトされているとき�
     (if (region-active-p)
         (call-interactively #'kill-region)
       (backward-kill-word arg)))
+#+end_src
+
+** simple
+
+#+begin_src emacs-lisp
+  (use-package simple
+    :ensure nil
+    :custom
+    (indent-tabs-mode nil)
+    (kill-whole-line t)
+    (track-eol t)
+    (line-move-visual nil)
+    (line-number-mode nil)
+    (column-number-mode nil)
+    )
+#+end_src
+
+** files
+
+#+begin_src emacs-lisp
+  (use-package files
+    :ensure nil
+    :defer t
+    :custom
+    (require-final-newline t))
+#+end_src
+
+** recentf
+
+#+begin_src emacs-lisp
+  (use-package recentf
+    :ensure nil
+    :custom
+    (recentf-mode t)
+    (recentf-max-saved-items nil))
+#+end_src
+
+** savehist
+
+#+begin_src emacs-lisp
+  (use-package savehist
+    :ensure nil
+    :custom
+    (savehist-mode t))
+#+end_src
+
+** display-line-numbers
+
+#+begin_src emacs-lisp
+  (use-package display-line-numbers
+    :ensure nil
+    :defer t
+    :custom
+    (global-display-line-numbers-mode t))
+#+end_src
+
+** paren
+
+#+begin_src emacs-lisp
+  (use-package paren
+    :ensure nil
+    :custom
+    (show-paren-mode t)
+    (show-paren-delay 0)
+    (show-paren-style 'mixed)
+    (show-paren-when-point-in-periphery t)
+    (show-paren-when-point-inside-paren t))
+#+end_src
+
+** autorevert
+
+#+begin_src emacs-lisp
+  (use-package autorevert
+    :ensure nil
+    :custom
+    (auto-revert-interval 1)
+    (global-auto-revert-mode t))
 #+end_src
 
 ** highlight-indent-guides
@@ -446,6 +489,16 @@ markがactiveなとき（リージョンがハイライトされているとき�
     )
 #+end_src
 
+** which-func
+
+#+begin_src emacs-lisp
+  (use-package which-func
+    :ensure nil
+    :defer t
+    :custom
+    (which-function-mode t))
+#+end_src
+
 ** change-inner
 
 #+begin_src emacs-lisp
@@ -455,6 +508,37 @@ markがactiveなとき（リージョンがハイライトされているとき�
            ("M-o" . change-outer)
            )
     )
+#+end_src
+
+** ffap
+
+#+begin_src emacs-lisp
+  (use-package ffap
+    :bind (nil
+           ("C-c v" . ffap)
+           )
+    )
+#+end_src
+
+** open-junk-file
+
+#+begin_src emacs-lisp
+  (use-package open-junk-file
+    :bind (nil
+           ("C-c j" . open-junk-file)
+           )
+    :custom
+    (open-junk-file-format "~/junk/%Y/%m/%d-%H%M%S." t)
+    )
+#+end_src
+
+** browse-at-remote
+
+#+begin_src emacs-lisp
+  (use-package browse-at-remote
+    :bind (nil
+           ("C-c u" . browse-url-at-point))
+    :commands browse-at-remote-get-url)
 #+end_src
 
 ** git-gutter
@@ -538,7 +622,9 @@ markがactiveなとき（リージョンがハイライトされているとき�
 ** annotate
 
 #+begin_src emacs-lisp
-  (use-package annotate)
+  (use-package annotate
+    :hook
+    (prog-mode . annotate-mode))
 #+end_src
 
 * File tree
@@ -700,7 +786,6 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
     (lsp-completion-mode . my/lsp-mode-setup-completion)
-    ((go-mode go-ts-mode ruby-mode ruby-ts-mode terraform-mode d-mode) . lsp-deferred)
     :init
     (setq lsp-keymap-prefix "C-c C-l")
 
@@ -812,11 +897,6 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
             (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
             (toml "https://github.com/tree-sitter/tree-sitter-toml")
             ))
-    :config
-    (setq major-mode-remap-alist
-          '((go-mode . go-ts-mode)
-            (ruby-mode . ruby-ts-mode))
-          )
     :custom
     (treesit-font-lock-level 4))
 #+end_src
@@ -826,27 +906,42 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
 
 #+begin_src emacs-lisp
   (use-package go-mode
-    :defer t)
+    :defer t
+    :config
+    (add-hook 'go-mode-hook #'lsp-deferred)
+    )
 
   (use-package go-ts-mode
-    :defer t)
+    :defer t
+    :init
+    (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode))
+    :config
+    (add-hook 'go-ts-mode-hook #'lsp-deferred))
 #+end_src
 
 ** Ruby
 
 #+begin_src emacs-lisp
   (use-package ruby-mode
-    :defer t)
+    :defer t
+    :config
+    (add-hook 'ruby-mode-hook #'lsp-deferred))
 
   (use-package ruby-ts-mode
-    :defer t)
+    :defer t
+    :init
+    (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode))
+    :config
+    (add-hook 'ruby-rs-mode-hook #'lsp-deferred))
 #+end_src
 
 ** D
 
 #+begin_src emacs-lisp
   (use-package d-mode
-    :defer t)
+    :defer t
+    :config
+    (add-hook 'd-mode-hook #'lsp-deferred))
 #+end_src
 
 ** Elm
@@ -891,7 +986,9 @@ terraform-lsの自動インストールはサポートされないので、下�
 
 #+begin_src emacs-lisp
   (use-package terraform-mode
-    :defer t)
+    :defer t
+    :config
+    (add-hook 'terraform-mode-hook #'lsp-deferred))
 #+end_src
 
 ** YAML
