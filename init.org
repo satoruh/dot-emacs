@@ -951,7 +951,8 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
   (use-package go-mode
     :defer t
     :config
-    (add-hook 'go-mode-hook #'lsp-deferred)
+    (when (package-installed-p 'lsp-mode)
+      (add-hook 'go-mode-hook #'lsp-deferred))
     )
 
   (use-package go-ts-mode
@@ -959,7 +960,8 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
     :init
     (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode))
     :config
-    (add-hook 'go-ts-mode-hook #'lsp-deferred))
+    (when (package-installed-p 'lsp-mode)
+      (add-hook 'go-ts-mode-hook #'lsp-deferred)))
 #+end_src
 
 ** Ruby
@@ -968,14 +970,16 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
   (use-package ruby-mode
     :defer t
     :config
-    (add-hook 'ruby-mode-hook #'lsp-deferred))
+    (when (package-installed-p 'lsp-mode)
+      (add-hook 'ruby-mode-hook #'lsp-deferred)))
 
   (use-package ruby-ts-mode
     :defer t
     :init
     (add-to-list 'major-mode-remap-alist '(ruby-mode . ruby-ts-mode))
     :config
-    (add-hook 'ruby-rs-mode-hook #'lsp-deferred))
+    (when (package-installed-p 'lsp-mode)
+      (add-hook 'ruby-ts-mode-hook #'lsp-deferred)))
 #+end_src
 
 ** TypeScript
@@ -996,7 +1000,8 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
   (use-package d-mode
     :defer t
     :config
-    (add-hook 'd-mode-hook #'lsp-deferred))
+    (when (package-installed-p 'lsp-mode)
+      (add-hook 'd-mode-hook #'lsp-deferred)))
 #+end_src
 
 ** Elm
@@ -1043,7 +1048,8 @@ terraform-lsの自動インストールはサポートされないので、下�
   (use-package terraform-mode
     :defer t
     :config
-    (add-hook 'terraform-mode-hook #'lsp-deferred))
+    (when (package-installed-p 'lsp-mode)
+      (add-hook 'terraform-mode-hook #'lsp-deferred)))
 #+end_src
 
 ** YAML
