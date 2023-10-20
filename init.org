@@ -247,6 +247,7 @@
 
 #+begin_src emacs-lisp
   (use-package which-key
+    :diminish which-key-mode
     :custom
     (which-key-mode t)
     (which-key-idle-delay 0.0)
@@ -342,6 +343,13 @@
   (use-package minions
     :custom
     (minions-mode t))
+#+end_src
+
+** diminish
+
+#+begin_src emacs-lisp
+  (use-package diminish
+    :ensure t)
 #+end_src
 
 * Editor
@@ -481,6 +489,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package highlight-indent-guides
+    :diminish highlight-indent-guides-mode
     :hook
     ((prog-mode yaml-mode) . highlight-indent-guides-mode)
     :custom
@@ -494,6 +503,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package volatile-highlights
+    :diminish volatile-highlights-mode
     :custom
     (volatile-highlights-mode t)
     :custom-face
@@ -505,6 +515,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package beacon
+    :diminish beacon-mode
     :custom
     (beacon-mode t)
     (beacon-color "yellow")
@@ -567,6 +578,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package git-gutter
+    :diminish git-gutter-mode
     :custom
     (global-git-gutter-mode t))
 #+end_src
@@ -645,6 +657,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package annotate
+    :diminish annotate-mode
     :hook
     (prog-mode . annotate-mode))
 #+end_src
@@ -751,6 +764,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
 
 #+begin_src emacs-lisp
   (use-package flycheck
+    :diminish flycheck-mode
     :custom
     (global-flycheck-mode t)
     (flycheck-display-errors-delay .0))
@@ -874,6 +888,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
 #+begin_src emacs-lisp
   (use-package yasnippet
     :disabled t
+    :diminish yas-minor-mode
     :bind (nil
            :map yas-keymap
            ("C-c C-y" . yas-expand)
