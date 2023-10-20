@@ -355,8 +355,6 @@
 * Editor
 ** default
 #+begin_src emacs-lisp
-  (add-hook 'before-save-hook #'delete-trailing-whitespace)
-
   (custom-set-variables
    '(display-line-numbers-widen t)
    '(show-trailing-whitespace t)
@@ -414,6 +412,8 @@ markがactiveなとき（リージョンがハイライトされているとき�
     (line-move-visual nil)
     (line-number-mode nil)
     (column-number-mode nil)
+    :hook
+    (before-save . delete-trailing-whitespace)
     )
 #+end_src
 
