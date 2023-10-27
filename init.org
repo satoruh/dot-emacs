@@ -155,8 +155,9 @@
 #+begin_src emacs-lisp
   (use-package asdf
     :load-path "~/src/github.com/tabfugnic/asdf.el"
+    :hook
+    (after-init . asdf-enable)
     :config
-    (asdf-enable)
     (exec-path-from-shell-copy-envs '("ASDF_DATA_DIR" "ASDF_CONFIG_FILE"))
     :custom
     (asdf-path (getenv "ASDF_DATA_DIR"))
