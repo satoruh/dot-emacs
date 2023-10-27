@@ -890,6 +890,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
   (use-package yasnippet
     :disabled t
     :diminish yas-minor-mode
+    :disabled
     :bind (nil
            :map yas-keymap
            ("C-c C-y" . yas-expand)
