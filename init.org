@@ -946,6 +946,21 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
     (treesit-font-lock-level 4))
 #+end_src
 
+** GitHub Copilot
+
+#+begin_src emacs-lisp
+  (use-package copilot
+    :load-path "~/src/github.com/zerolfx/copilot.el"
+    :hook (prog-mode . copilot-mode)
+    )
+#+end_src
+
+** editorconfig
+
+#+begin_src emacs-lisp
+  (use-package editorconfig)
+#+end_src
+
 * Programming and Markup languages
 ** Go
 
