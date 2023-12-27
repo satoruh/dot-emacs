@@ -846,7 +846,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
            )
     :custom
     ;; lsp-ui-sideline
-    (lsp-ui-sideline-enable t)
+    (lsp-ui-sideline-enable nil)
     (lsp-ui-sideline-delay 0)
     (lsp-ui-sideline-show-hover t)
     ;; lsp-ui-peek
