@@ -956,7 +956,10 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
   (use-package copilot
     :load-path "~/src/github.com/zerolfx/copilot.el"
     :hook (prog-mode . copilot-mode)
-    )
+    :bind (nil
+           :map copilot-completion-map
+           ("<tab>" . 'copilot-accept-completion)
+           ))
 #+end_src
 
 ** editorconfig
