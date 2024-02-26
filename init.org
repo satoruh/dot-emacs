@@ -1073,6 +1073,13 @@ terraform-lsの自動インストールはサポートされないので、下�
       (add-hook 'terraform-mode-hook #'lsp-deferred)))
 #+end_src
 
+** Dockerfile
+
+#+begin_src emacs-lisp
+  (use-package dockerfile-mode
+    :defer t)
+#+end_src
+
 ** YAML
 
 #+begin_src emacs-lisp
