@@ -154,7 +154,7 @@
 
 #+begin_src emacs-lisp
   (use-package asdf
-    :load-path "~/src/github.com/tabfugnic/asdf.el"
+    :vc (:url "https://github.com/tabfugnic/asdf.el" :rev :newest)
     :hook
     (after-init . asdf-enable)
     :config
@@ -954,7 +954,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
 
 #+begin_src emacs-lisp
   (use-package copilot
-    :load-path "~/src/github.com/zerolfx/copilot.el"
+    :vc (:url "https://github.com/zerolfx/copilot.el" :rev :newest)
     :hook (prog-mode . copilot-mode)
     :bind (nil
            :map copilot-completion-map
