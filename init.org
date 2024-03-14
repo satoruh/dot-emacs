@@ -988,6 +988,20 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
       (add-hook 'go-ts-mode-hook #'lsp-deferred)))
 #+end_src
 
+** Javascript
+
+#+begin_src emacs-lisp
+  (use-package js
+    :defer t
+    :config
+    (when (package-installed-p 'lsp-mode)
+      (add-hook 'js-mode-hook #'lsp-deferred))
+    )
+
+  (use-package jade-mode
+    :defer t)
+#+end_src
+
 ** Ruby
 
 #+begin_src emacs-lisp
