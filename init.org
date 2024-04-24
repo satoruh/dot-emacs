@@ -956,6 +956,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
 
 #+begin_src emacs-lisp
   (use-package copilot
+    :disabled
     :vc (:url "https://github.com/copilot-emacs/copilot.el" :rev :newest)
     :hook (prog-mode . copilot-mode)
     :bind (nil
