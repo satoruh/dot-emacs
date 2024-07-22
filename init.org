@@ -757,6 +757,26 @@ markがactiveなとき（リージョンがハイライトされているとき�
                                  '((go . t))))
 #+end_src
 
+** org-roam
+
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :bind (nil
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n g" . org-roam-graph)
+           )
+    :config
+    (org-roam-db-autosync-mode)
+    )
+#+end_src
+
+*** org-roam-ui
+
+#+begin_src emacs-lisp
+  (use-package org-roam-ui)
+#+end_src
+
 * Programming
 ** general
 
