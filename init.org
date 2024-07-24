@@ -789,6 +789,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
   (use-package lsp-mode
     :custom
     (lsp-completion-provider :none)
+    (lsp-enable-snippet nil)
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
     (lsp-completion-mode . my/lsp-mode-setup-completion)
@@ -856,6 +857,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
 
 #+begin_src emacs-lisp
   (use-package yasnippet
+    :disabled t
     :bind (nil
            :map yas-keymap
            ("C-c C-y" . yas-expand)
@@ -867,6 +869,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
 
 #+begin_src emacs-lisp
   (use-package yasnippet-snippets
+    :disabled t
     :after yasnippet)
 #+end_src
 
@@ -874,6 +877,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
 
 #+begin_src emacs-lisp
   (use-package consult-yasnippet
+    :disabled t
     :after (consult yasnippet))
 #+end_src
 
@@ -881,6 +885,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
 
 #+begin_src emacs-lisp
   (use-package yasnippet-capf
+    :disabled t
     :after (cape yasnippet)
     :config
     (add-to-list 'completion-at-point-functions #'yasnippet-capf)
