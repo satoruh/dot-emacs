@@ -702,6 +702,57 @@ markがactiveなとき（リージョンがハイライトされているとき�
     :disabled t)
 #+end_src
 
+* Term
+** vterm
+
+vterm-moduleのインストールにcmakeが必要
+#+begin_src shell
+  brew install cmake
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package vterm
+    :custom
+    (vterm-always-compile-module t)
+    :config
+    (with-eval-after-load 'project
+      (defun my/project-vterm ()
+        ""
+        (interactive)
+        (defvar vterm-buffer-name)
+        (let* ((default-directory (project-root (project-current t)))
+               (vterm-buffer-name (project-prefixed-buffer-name "vterm"))
+               (vterm-buffer (get-buffer vterm-buffer-name)))
+          (if (and vterm-buffer (not current-prefix-arg))
+              (pop-to-buffer-same-window vterm-buffer)
+            (vterm t))))
+      (define-key project-prefix-map (kbd "s") 'my/project-vterm) ;orig. project-shell
+      )
+    (add-to-list 'display-buffer-alist
+                 '((lambda (buffer-or-name _)
+                     (let ((buffer (get-buffer buffer-or-name)))
+                       (with-current-buffer buffer
+                         (or (equal major-mode 'vterm-mode)
+                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                   (display-buffer-reuse-window display-buffer-in-side-window)
+                   (side . bottom)
+                   (dedicated . t) ;dedicated is supported in emacs27
+                   (reusable-frames . visible)
+                   (window-height . 0.25)))
+    )
+#+end_src
+
+*** vterm-toggle
+
+#+begin_src emacs-lisp
+  (use-package vterm-toggle
+    :bind (nil
+           ("C-\"" . vterm-toggle))
+    :custom
+    (vterm-toggle-scope 'project)
+    )
+#+end_src
+
 * Org
 ** org
 
