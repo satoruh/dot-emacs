@@ -1,6 +1,12 @@
 #+TITLE: early-init.org
 #+STARTUP: overview
 
+* init .el
+
+#+begin_src emacs-lisp
+  ;;; -*- lexical-binding: t -*-
+#+end_src
+
 * Frames
 
 #+begin_src emacs-lisp

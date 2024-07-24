@@ -1,6 +1,12 @@
 #+TITLE: init.org
 #+STARTUP: show5levels
 
+* init .el
+
+#+begin_src emacs-lisp
+  ;;; -*- lexical-binding: t -*-
+#+end_src
+
 * Setup
 ** GCを調整して初期化中に実行されないようにする
 
