@@ -906,6 +906,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
             (bash "https://github.com/tree-sitter/tree-sitter-bash")
             (go "https://github.com/tree-sitter/tree-sitter-go")
             (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
+            (typescript "https://github.com/tree-sitter/tree-sitter-typescript")
             (toml "https://github.com/tree-sitter/tree-sitter-toml")
             ))
     :custom
@@ -944,6 +945,18 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
     (add-to-list 'major-mode-remap-alist '(ruby-mode . ruby-ts-mode))
     :config
     (add-hook 'ruby-rs-mode-hook #'lsp-deferred))
+#+end_src
+
+** TypeScript
+
+#+begin_src emacs-lisp
+  (use-package typescript-mode
+    :defer t
+    :init
+    (add-to-list 'auto-mode-alist '("\\.ts" . typescript-mode))
+    :config
+    (add-hook 'typescript-mode-hook #'lsp-deferred)
+    )
 #+end_src
 
 ** D
