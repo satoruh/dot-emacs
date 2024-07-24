@@ -5,6 +5,8 @@
 *.eln
 .\#*
 /elpa/
+/eln-cache/
+/.cache/
 
 early-init.el
 init.el
