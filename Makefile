@@ -1,6 +1,7 @@
 # -*- mode: makefile-gmake -*-
 
 EMACS = ~/Applications/Emacs.app/Contents/MacOS/Emacs
+EMACS_BATCH = $(EMACS) -Q --batch
 
 .DEFAULT: byte-compile
 
@@ -12,12 +13,12 @@ byte-compile: init.elc early-init.elc
 %.elc: %.el
 	@echo Compiling file $<
 	@rm -f $@
-	@$(EMACS) -Q --batch -f batch-byte-compile $<
+	@$(EMACS_BATCH) -f batch-byte-compile $<
 	@chmod ugo-w $@
 
 %.el: %.org
 	@echo Generating $@ from $<
-	@$(EMACS) -Q --batch --eval "(progn (require 'ob-tangle) (org-babel-tangle-file \"$<\" \"$@\" \"emacs-lisp\"))"
+	@$(EMACS_BATCH) --eval "(progn (require 'ob-tangle) (org-babel-tangle-file \"$<\" \"$@\" \"emacs-lisp\"))"
 	@chmod ugo-w $@
 
 .PHONY: link
