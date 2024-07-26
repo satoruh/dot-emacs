@@ -373,6 +373,10 @@
   (defvar my/disable-show-trailing-whitespace-modes
     '(vc-annotate-mode
       term-mode
+      vterm-mode
+      completion-list-mode
+      compilation-mode
+      Buffer-menu-mode
       ))
 
   (mapc
