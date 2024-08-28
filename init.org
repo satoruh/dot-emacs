@@ -1,7 +1,7 @@
 #+TITLE: init.org
 #+STARTUP: show5levels
 
-* init .el
+* init.el
 
 #+begin_src emacs-lisp
   ;;; -*- lexical-binding: t -*-
@@ -792,8 +792,10 @@ vterm-moduleのインストールにcmakeが必要
 #+begin_src emacs-lisp
   (use-package org-modern
     :custom
-    (org-modern-star '("󰧱" "󰎦" "󰎩" "󰎬" "󰎮" "󰎰" "󰎵" "󰎸" "󰎻" "󰎾" "󰽾"))
-    :hook (org-mode . org-modern-mode)
+    (org-modern-star 'replace)
+    (org-modern-replace-stars '("󰧱" "󰎦" "󰎩" "󰎬" "󰎮" "󰎰" "󰎵" "󰎸" "󰎻" "󰎾" "󰽾"))
+    :hook
+    (org-mode . org-modern-mode)
     )
 #+end_src
 
