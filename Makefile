@@ -1,7 +1,7 @@
 # -*- mode: makefile-gmake -*-
 
 EMACS = ~/Applications/Emacs.app/Contents/MacOS/Emacs
-EMACS_BATCH = $(EMACS) -Q --batch
+EMACS_BATCH = "$(EMACS)" -Q --batch
 
 .DEFAULT: byte-compile
 
