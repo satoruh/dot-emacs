@@ -1206,16 +1206,6 @@ GripはGitHubのAPIを呼ぶ
            ("g" . grip-mode)))
 #+end_src
 
-* Configuration files
-** Git Config Modes
-
-Major modes for various Git configuration files.
-
-#+begin_src emacs-lisp
-  (use-package git-modes
-    :defer t)
-#+end_src
-
 * Git
 ** magit
 
@@ -1255,6 +1245,15 @@ Major modes for various Git configuration files.
     :custom
     (blamer-idle-time .3)
     (global-blamer-mode nil))
+#+end_src
+
+** git-modes
+
+Major modes for various Git configuration files.
+
+#+begin_src emacs-lisp
+  (use-package git-modes
+    :defer t)
 #+end_src
 
 * AI
