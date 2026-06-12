@@ -95,6 +95,7 @@
    '(project-list-file (my/user-data "projects"))
    '(recentf-save-file (my/user-data "recentf"))
    '(savehist-file (my/user-data "history"))
+   '(tramp-persistency-file-name (my/user-data "tramp"))
 
    ;; transient
    '(transient-levels-file (my/user-data "transient/levels.el"))
