@@ -853,7 +853,7 @@ vterm-moduleのインストールにcmakeが必要
   (use-package ob-go
     :after org
     :config
-    (org-babel-do-load-languages 'org-babel-load-languges
+    (org-babel-do-load-languages 'org-babel-load-languages
                                  '((go . t))))
 #+end_src
 
