@@ -133,6 +133,11 @@
   (set-default-coding-systems 'utf-8-unix)
   (prefer-coding-system 'utf-8-unix)
   (set-selection-coding-system 'utf-8-unix)
+
+  (use-package mozc
+    :config
+    (setq default-input-method "japanese-mozc")
+    (setq mozc-candidate-style 'overlay))
 #+end_src
 
 ** PATH
@@ -236,6 +241,8 @@
   (global-unset-key (kbd "C-x C-c"))   ;orig. save-buffers-kill-terminal
   (global-unset-key (kbd "C-z"))       ;orig. suspend-frame
   (global-unset-key (kbd "C-x C-z"))   ;orig. suspend-frame
+
+  (global-set-key (kbd "C-o") 'toggle-input-method) ;orig. open-line
 
   (global-set-key (kbd "C-w") 'my/kill-region-or-backward-kill-word) ;orig. kill-region
   (global-set-key (kbd "C-x k") 'kill-current-buffer) ;orig. kill-buffer
