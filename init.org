@@ -824,6 +824,22 @@ vterm-moduleのインストールにcmakeが必要
                                  '((go . t))))
 #+end_src
 
+*** auto-tangle
+
+~/.config 以下の org ファイルは保存時に自動でタングルする。生成物は Makefile と同じく read-only にする。
+
+#+begin_src emacs-lisp
+  (defun my/org-babel-auto-tangle ()
+    (when (string-prefix-p (file-truename "~/.config/")
+                           (file-truename buffer-file-name))
+      (dolist (file (org-babel-tangle))
+        (set-file-modes file #o444))))
+
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (add-hook 'after-save-hook #'my/org-babel-auto-tangle nil t)))
+#+end_src
+
 ** org-roam
 
 #+begin_src emacs-lisp
