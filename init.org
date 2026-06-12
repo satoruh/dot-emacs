@@ -600,6 +600,161 @@ markがactiveなとき（リージョンがハイライトされているとき�
     (prog-mode . annotate-mode))
 #+end_src
 
+* Completion
+** vertico
+
+#+begin_src emacs-lisp
+  (use-package vertico
+    :bind (nil
+           :map vertico-map
+           ("?"     . minibuffer-completion-help)
+           ("M-RET" . minibuffer-force-complete-and-exit)
+           ("M-TAB" . minibuffer-complete)
+           ("C-l"   . vertico-directory-up)
+           )
+    :custom
+    (vertico-mode t)
+    (vertico-multiform-mode t)
+    (vertico-cycle t)
+    )
+#+end_src
+
+*** vertico-posframe
+
+#+begin_src emacs-lisp
+  (use-package vertico-posframe
+    :after vertico
+    :custom
+    (vertico-posframe-mode t)
+    (vertico-multiform-commands
+     '((consult-line
+        posframe
+        (vertico-posframe-poshandler . posframe-poshandler-frame-bottom-center))
+       (consult-bookmark
+        posframe
+        (vertico-posframe-poshandler . posframe-poshandler-frame-bottom-center))))
+    )
+#+end_src
+
+** marginalia
+
+#+begin_src emacs-lisp
+  (use-package marginalia
+    :custom
+    (marginalia-mode t))
+#+end_src
+
+** orderless
+
+#+begin_src emacs-lisp
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless))
+    )
+#+end_src
+
+** consult
+
+#+begin_src emacs-lisp
+  (use-package consult
+    :bind (nil
+           ([remap switch-to-buffer]              . consult-buffer)
+           ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
+           ([remap switch-to-buffer-other-frame]  . consult-buffer-other-frame)
+           ([remap project-switch-to-buffer]      . consult-project-buffer)
+           ([remap bookmark-set]                  . consult-bookmark)
+           ([remap bookmark-jump]                 . consult-bookmark)
+           ([remap yank-pop]                      . consult-yank-pop)
+           ([remap isearch-forawrd]               . consult-line)
+           ("C-*"                                 . consult-outline)
+
+           ;; for register
+           ("M-#"   . consult-register-load)
+           ("M-'"   . consult-register-store) ;orig. abbrev-prefix-mark
+           ("C-M-#" . consult-register)
+
+           :map goto-map
+           ("g"   . consult-goto-line)    ;orig. goto-line
+           ("M-g" . consult-goto-line)    ;orig. goto-line
+           ("i"   . consult-imenu)        ;orig. imenu
+           ("I"   . consult-imenu-multi)  ;orig. imenu
+
+           :map search-map
+           ("g" . consult-grep)
+           ("G" . consult-git-grep)
+           ("l" . consult-line)
+           ("L" . consult-line-multi)
+           ("k" . consult-keep-lines)
+           ("u" . consult-focus-lines)
+
+           :map isearch-mode-map
+           ("M-e"   . consult-isearch-history)
+           ("M-s e" . consult-isearch-history)
+           ("M-s l" . consult-line)
+           ("M-s L" . consult-line-multi)
+           )
+    :custom
+    (xref-show-xrefs-function #'consult-xref)
+    (xref-show-definitions-function #'consult-xref)
+    )
+#+end_src
+
+** embark
+
+#+begin_src emacs-lisp
+  (use-package embark
+    :bind (nil
+           ("C-." . embark-act)
+           ("M-." . embark-dwim)
+           )
+    :custom
+    (embark-help-key "?")
+    )
+#+end_src
+
+*** embark-consult
+
+#+begin_src emacs-lisp
+  (use-package embark-consult
+    :after (embark consult))
+#+end_src
+
+** corfu
+
+#+begin_src emacs-lisp
+  (use-package corfu
+    :custom
+    (global-corfu-mode t)
+    (corfu-auto t)
+    (corfu-auto-delay 0)
+    (corfu-auto-prefix 0)
+    (corfu-cycle t)
+    (corfu-preselect 'prompt)
+    (corfu-exclude-modes '(shell-mode))
+    ;; corfu-popupinfo
+    (corfu-popupinfo-mode t)
+    (corfu-popupinfo-delay '(0 . 0))
+    :hook
+    (corfu-mode . corfu-popupinfo-mode))
+#+end_src
+
+** cape
+
+#+begin_src emacs-lisp
+  (use-package cape)
+#+end_src
+
+** kind-icon
+
+#+begin_src emacs-lisp
+  (use-package kind-icon
+    :after corfu
+    :custom
+    (kind-icon-default-face 'corfu-default)
+    :init
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+#+end_src
+
 * Term
 ** vterm
 
@@ -1055,161 +1210,6 @@ Major modes for various Git configuration files.
 #+begin_src emacs-lisp
   (use-package git-modes
     :defer t)
-#+end_src
-
-* Completion
-** vertico
-
-#+begin_src emacs-lisp
-  (use-package vertico
-    :bind (nil
-           :map vertico-map
-           ("?"     . minibuffer-completion-help)
-           ("M-RET" . minibuffer-force-complete-and-exit)
-           ("M-TAB" . minibuffer-complete)
-           ("C-l"   . vertico-directory-up)
-           )
-    :custom
-    (vertico-mode t)
-    (vertico-multiform-mode t)
-    (vertico-cycle t)
-    )
-#+end_src
-
-*** vertico-posframe
-
-#+begin_src emacs-lisp
-  (use-package vertico-posframe
-    :after vertico
-    :custom
-    (vertico-posframe-mode t)
-    (vertico-multiform-commands
-     '((consult-line
-        posframe
-        (vertico-posframe-poshandler . posframe-poshandler-frame-bottom-center))
-       (consult-bookmark
-        posframe
-        (vertico-posframe-poshandler . posframe-poshandler-frame-bottom-center))))
-    )
-#+end_src
-
-** marginalia
-
-#+begin_src emacs-lisp
-  (use-package marginalia
-    :custom
-    (marginalia-mode t))
-#+end_src
-
-** orderless
-
-#+begin_src emacs-lisp
-  (use-package orderless
-    :custom
-    (completion-styles '(orderless))
-    )
-#+end_src
-
-** consult
-
-#+begin_src emacs-lisp
-  (use-package consult
-    :bind (nil
-           ([remap switch-to-buffer]              . consult-buffer)
-           ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
-           ([remap switch-to-buffer-other-frame]  . consult-buffer-other-frame)
-           ([remap project-switch-to-buffer]      . consult-project-buffer)
-           ([remap bookmark-set]                  . consult-bookmark)
-           ([remap bookmark-jump]                 . consult-bookmark)
-           ([remap yank-pop]                      . consult-yank-pop)
-           ([remap isearch-forawrd]               . consult-line)
-           ("C-*"                                 . consult-outline)
-
-           ;; for register
-           ("M-#"   . consult-register-load)
-           ("M-'"   . consult-register-store) ;orig. abbrev-prefix-mark
-           ("C-M-#" . consult-register)
-
-           :map goto-map
-           ("g"   . consult-goto-line)    ;orig. goto-line
-           ("M-g" . consult-goto-line)    ;orig. goto-line
-           ("i"   . consult-imenu)        ;orig. imenu
-           ("I"   . consult-imenu-multi)  ;orig. imenu
-
-           :map search-map
-           ("g" . consult-grep)
-           ("G" . consult-git-grep)
-           ("l" . consult-line)
-           ("L" . consult-line-multi)
-           ("k" . consult-keep-lines)
-           ("u" . consult-focus-lines)
-
-           :map isearch-mode-map
-           ("M-e"   . consult-isearch-history)
-           ("M-s e" . consult-isearch-history)
-           ("M-s l" . consult-line)
-           ("M-s L" . consult-line-multi)
-           )
-    :custom
-    (xref-show-xrefs-function #'consult-xref)
-    (xref-show-definitions-function #'consult-xref)
-    )
-#+end_src
-
-** embark
-
-#+begin_src emacs-lisp
-  (use-package embark
-    :bind (nil
-           ("C-." . embark-act)
-           ("M-." . embark-dwim)
-           )
-    :custom
-    (embark-help-key "?")
-    )
-#+end_src
-
-*** embark-consult
-
-#+begin_src emacs-lisp
-  (use-package embark-consult
-    :after (embark consult))
-#+end_src
-
-** corfu
-
-#+begin_src emacs-lisp
-  (use-package corfu
-    :custom
-    (global-corfu-mode t)
-    (corfu-auto t)
-    (corfu-auto-delay 0)
-    (corfu-auto-prefix 0)
-    (corfu-cycle t)
-    (corfu-preselect 'prompt)
-    (corfu-exclude-modes '(shell-mode))
-    ;; corfu-popupinfo
-    (corfu-popupinfo-mode t)
-    (corfu-popupinfo-delay '(0 . 0))
-    :hook
-    (corfu-mode . corfu-popupinfo-mode))
-#+end_src
-
-** cape
-
-#+begin_src emacs-lisp
-  (use-package cape)
-#+end_src
-
-** kind-icon
-
-#+begin_src emacs-lisp
-  (use-package kind-icon
-    :after corfu
-    :custom
-    (kind-icon-default-face 'corfu-default)
-    :init
-    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
 
 * Git
