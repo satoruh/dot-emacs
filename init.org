@@ -363,6 +363,31 @@
     :ensure t)
 #+end_src
 
+** nerd-icons
+
+#+begin_src emacs-lisp
+  (use-package nerd-icons
+    )
+#+end_src
+
+** nerd-icons-dired
+
+#+begin_src emacs-lisp
+  (use-package nerd-icons-dired
+    :hook
+    (dired-mode . nerd-icons-dired-mode))
+#+end_src
+
+** nerd-icons-completion
+
+#+begin_src emacs-lisp
+  (use-package nerd-icons-completion
+    :config
+    (nerd-icons-completion-mode)
+    :hook
+    (marginalia-mode . nerd-icons-completion-marginalia-setup))
+#+end_src
+
 * Editor
 ** default
 #+begin_src emacs-lisp
@@ -589,24 +614,6 @@ markがactiveなとき（リージョンがハイライトされているとき�
     :commands browse-at-remote-get-url)
 #+end_src
 
-** git-gutter
-
-#+begin_src emacs-lisp
-  (use-package git-gutter
-    :diminish git-gutter-mode
-    :custom
-    (global-git-gutter-mode t))
-#+end_src
-
-** blamer
-
-#+begin_src emacs-lisp
-  (use-package blamer
-    :custom
-    (blamer-idle-time .3)
-    (global-blamer-mode nil))
-#+end_src
-
 ** rainbow-delimiters
 
 #+begin_src emacs-lisp
@@ -641,31 +648,6 @@ markがactiveなとき（リージョンがハイライトされているとき�
     :custom
     (all-the-icons-completion-mode t)
     )
-#+end_src
-
-** nerd-icons
-
-#+begin_src emacs-lisp
-  (use-package nerd-icons
-    )
-#+end_src
-
-** nerd-icons-dired
-
-#+begin_src emacs-lisp
-  (use-package nerd-icons-dired
-    :hook
-    (dired-mode . nerd-icons-dired-mode))
-#+end_src
-
-** nerd-icons-completion
-
-#+begin_src emacs-lisp
-  (use-package nerd-icons-completion
-    :config
-    (nerd-icons-completion-mode)
-    :hook
-    (marginalia-mode . nerd-icons-completion-marginalia-setup))
 #+end_src
 
 ** annotate
@@ -1413,6 +1395,24 @@ Major modes for various Git configuration files.
 #+begin_src emacs-lisp
   (use-package forge
     :after magit)
+#+end_src
+
+** git-gutter
+
+#+begin_src emacs-lisp
+  (use-package git-gutter
+    :diminish git-gutter-mode
+    :custom
+    (global-git-gutter-mode t))
+#+end_src
+
+** blamer
+
+#+begin_src emacs-lisp
+  (use-package blamer
+    :custom
+    (blamer-idle-time .3)
+    (global-blamer-mode nil))
 #+end_src
 
 * AI
