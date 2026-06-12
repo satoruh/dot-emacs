@@ -108,6 +108,9 @@
    ;; org-persist
    '(org-persist-directory (my/user-data "org-persist/"))
 
+   ;; org-roam
+   '(org-roam-db-location (my/user-data "org-roam.db"))
+
    ;; lsp-mode
    '(lsp-session-file (my/user-data "lsp-session"))
 
