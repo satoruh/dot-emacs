@@ -853,6 +853,7 @@ vterm-moduleのインストールにcmakeが必要
            ("C-c n g" . org-roam-graph)
            )
     :config
+    (make-directory org-roam-directory t)
     (org-roam-db-autosync-mode)
     )
 #+end_src
