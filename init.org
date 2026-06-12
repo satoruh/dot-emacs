@@ -229,6 +229,18 @@
     (other-window -1))
   #+end_src
 
+*** kill-region か backward-kill-word する
+
+markがactiveなとき（リージョンがハイライトされているとき）はkill-region、そうでないときはbackward-kill-wordする
+
+#+begin_src emacs-lisp
+  (defun my/kill-region-or-backward-kill-word (&optional arg)
+    (interactive "p")
+    (if (region-active-p)
+        (call-interactively #'kill-region)
+      (backward-kill-word arg)))
+#+end_src
+
 ** Global keybinds
 #+begin_src emacs-lisp
   (define-key key-translation-map [?\C-h] [?\C-?])
@@ -394,18 +406,6 @@
 #+begin_src emacs-lisp
   (put 'narrow-to-region 'disabled nil)
   (put 'narrow-to-page 'disabled nil)
-#+end_src
-
-** kill-region か backward-kill-word する
-
-markがactiveなとき（リージョンがハイライトされているとき）はkill-region、そうでないときはbackward-kill-wordする
-
-#+begin_src emacs-lisp
-  (defun my/kill-region-or-backward-kill-word (&optional arg)
-    (interactive "p")
-    (if (region-active-p)
-        (call-interactively #'kill-region)
-      (backward-kill-word arg)))
 #+end_src
 
 ** simple
