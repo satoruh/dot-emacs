@@ -1116,7 +1116,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
   (use-package typescript-mode
     :defer t
     :init
-    (add-to-list 'auto-mode-alist '("\\.ts" . typescript-mode))
+    (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
     :config
     (add-hook 'typescript-mode-hook #'lsp-deferred)
     )
