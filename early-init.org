@@ -1,7 +1,7 @@
 #+TITLE: early-init.org
 #+STARTUP: overview
 
-* init .el
+* init.el
 
 #+begin_src emacs-lisp
   ;;; -*- lexical-binding: t -*-
