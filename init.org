@@ -167,7 +167,7 @@
     (exec-path-from-shell-copy-envs '("ASDF_DATA_DIR" "ASDF_CONFIG_FILE"))
     :custom
     (asdf-path (expand-file-name "~/.local/share/asdf/"))
-    (asdf-binary "/opt/homebrew/opt/asdf/libexec/bin/asdf"))
+    (asdf-binary (or (executable-find "asdf") "asdf")))
 #+end_src
 
 ** startup
