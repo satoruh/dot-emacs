@@ -167,7 +167,7 @@
     (exec-path-from-shell-copy-envs '("ASDF_DATA_DIR" "ASDF_CONFIG_FILE"))
     :custom
     (asdf-path (expand-file-name "~/.local/share/asdf/"))
-    (asdf-binary "/opt/homebrew/opt/asdf/libexec/bin/asdf"))
+    (asdf-binary (or (executable-find "asdf") "asdf")))
 #+end_src
 
 ** startup
@@ -178,9 +178,11 @@
     :defer t
     :custom
     (inhibit-startup-screen t)
-    (inhibit-startup-echo-area-message t)
     (initial-scratch-message nil)
     (initial-major-mode 'org-mode))
+
+  (custom-set-variables
+   '(inhibit-startup-echo-area-message (user-login-name)))
 #+end_src
 
 ** Frames and display settings
@@ -735,7 +737,7 @@ markがactiveなとき（リージョンがハイライトされているとき�
     (corfu-auto-prefix 0)
     (corfu-cycle t)
     (corfu-preselect 'prompt)
-    (corfu-exclude-modes '(shell-mode))
+    (global-corfu-modes '((not shell-mode) t))
     ;; corfu-popupinfo
     (corfu-popupinfo-mode t)
     (corfu-popupinfo-delay '(0 . 0))
@@ -770,9 +772,8 @@ vterm-moduleのインストールにcmakeが必要
 
 #+begin_src emacs-lisp
   (use-package vterm
-    :custom
-    (vterm-always-compile-module t)
-    :config
+    :defer t
+    :init
     (with-eval-after-load 'project
       (defun my/project-vterm ()
         ""
@@ -791,12 +792,15 @@ vterm-moduleのインストールにcmakeが必要
                      (let ((buffer (get-buffer buffer-or-name)))
                        (with-current-buffer buffer
                          (or (equal major-mode 'vterm-mode)
-                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                             (and (boundp 'vterm-buffer-name)
+                                  (string-prefix-p vterm-buffer-name (buffer-name buffer)))))))
                    (display-buffer-reuse-window display-buffer-in-side-window)
                    (side . bottom)
                    (dedicated . t) ;dedicated is supported in emacs27
                    (reusable-frames . visible)
                    (window-height . 0.25)))
+    :custom
+    (vterm-always-compile-module t)
     )
 #+end_src
 
@@ -860,12 +864,18 @@ vterm-moduleのインストールにcmakeが必要
 
 *** auto-tangle
 
-~/.config 以下の org ファイルは保存時に自動でタングルする。生成物は Makefile と同じく read-only にする。
+~/.config と user-emacs-directory 以下の org ファイルは保存時に自動でタングルする。生成物は Makefile と同じく read-only にする。シンボリックリンク経由で開いた場合も判定できるよう、開いたままのパスと truename の両方で比較する。
 
 #+begin_src emacs-lisp
+  (defvar my/org-babel-auto-tangle-directories
+    (list "~/.config/" user-emacs-directory))
+
   (defun my/org-babel-auto-tangle ()
-    (when (string-prefix-p (file-truename "~/.config/")
-                           (file-truename buffer-file-name))
+    (when (seq-some (lambda (dir)
+                      (or (string-prefix-p (expand-file-name dir) buffer-file-name)
+                          (string-prefix-p (file-truename dir)
+                                           (file-truename buffer-file-name))))
+                    my/org-babel-auto-tangle-directories)
       (dolist (file (org-babel-tangle))
         (set-file-modes file #o444))))
 
@@ -1035,10 +1045,9 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
           '(
             (bash "https://github.com/tree-sitter/tree-sitter-bash")
             (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
-            (typescript "https://github.com/tree-sitter/tree-sitter-typescript")
+            (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
             (go "https://github.com/tree-sitter/tree-sitter-go")
             (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
-            (typescript "https://github.com/tree-sitter/tree-sitter-typescript")
             (toml "https://github.com/tree-sitter/tree-sitter-toml")
             ))
     :custom
@@ -1109,7 +1118,7 @@ https://github.com/Pure-D/serve-d/blob/master/README.md#installation
   (use-package typescript-mode
     :defer t
     :init
-    (add-to-list 'auto-mode-alist '("\\.ts" . typescript-mode))
+    (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
     :config
     (add-hook 'typescript-mode-hook #'lsp-deferred)
     )
