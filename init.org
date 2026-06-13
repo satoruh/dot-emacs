@@ -860,12 +860,18 @@ vterm-moduleのインストールにcmakeが必要
 
 *** auto-tangle
 
-~/.config 以下の org ファイルは保存時に自動でタングルする。生成物は Makefile と同じく read-only にする。
+~/.config と user-emacs-directory 以下の org ファイルは保存時に自動でタングルする。生成物は Makefile と同じく read-only にする。シンボリックリンク経由で開いた場合も判定できるよう、開いたままのパスと truename の両方で比較する。
 
 #+begin_src emacs-lisp
+  (defvar my/org-babel-auto-tangle-directories
+    (list "~/.config/" user-emacs-directory))
+
   (defun my/org-babel-auto-tangle ()
-    (when (string-prefix-p (file-truename "~/.config/")
-                           (file-truename buffer-file-name))
+    (when (seq-some (lambda (dir)
+                      (or (string-prefix-p (expand-file-name dir) buffer-file-name)
+                          (string-prefix-p (file-truename dir)
+                                           (file-truename buffer-file-name))))
+                    my/org-babel-auto-tangle-directories)
       (dolist (file (org-babel-tangle))
         (set-file-modes file #o444))))
 
