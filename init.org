@@ -772,9 +772,8 @@ vterm-moduleのインストールにcmakeが必要
 
 #+begin_src emacs-lisp
   (use-package vterm
-    :custom
-    (vterm-always-compile-module t)
-    :config
+    :defer t
+    :init
     (with-eval-after-load 'project
       (defun my/project-vterm ()
         ""
@@ -793,12 +792,15 @@ vterm-moduleのインストールにcmakeが必要
                      (let ((buffer (get-buffer buffer-or-name)))
                        (with-current-buffer buffer
                          (or (equal major-mode 'vterm-mode)
-                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                             (and (boundp 'vterm-buffer-name)
+                                  (string-prefix-p vterm-buffer-name (buffer-name buffer)))))))
                    (display-buffer-reuse-window display-buffer-in-side-window)
                    (side . bottom)
                    (dedicated . t) ;dedicated is supported in emacs27
                    (reusable-frames . visible)
                    (window-height . 0.25)))
+    :custom
+    (vterm-always-compile-module t)
     )
 #+end_src
 
