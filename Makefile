@@ -31,5 +31,5 @@ link:
 
 .PHONY: clean
 clean:
-	@rm -f init.el{,c} early-init.el{,c}
+	@rm -f init.el init.elc early-init.el early-init.elc
 	@rm -f *~
