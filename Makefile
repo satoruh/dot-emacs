@@ -1,6 +1,9 @@
 # -*- mode: makefile-gmake -*-
 
-EMACS = ~/Applications/Emacs.app/Contents/MacOS/Emacs
+ifeq ($(shell uname),Darwin)
+EMACS ?= ~/Applications/Emacs.app/Contents/MacOS/Emacs
+endif
+EMACS ?= emacs
 EMACS_BATCH = "$(EMACS)" -Q --batch
 
 .DEFAULT: byte-compile
