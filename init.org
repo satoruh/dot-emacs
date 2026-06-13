@@ -178,9 +178,11 @@
     :defer t
     :custom
     (inhibit-startup-screen t)
-    (inhibit-startup-echo-area-message t)
     (initial-scratch-message nil)
     (initial-major-mode 'org-mode))
+
+  (custom-set-variables
+   '(inhibit-startup-echo-area-message (user-login-name)))
 #+end_src
 
 ** Frames and display settings
