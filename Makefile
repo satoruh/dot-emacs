@@ -1,6 +1,8 @@
 # -*- mode: makefile-gmake -*-
 
-ifeq ($(shell uname),Darwin)
+UNAME := $(shell uname)
+
+ifeq ($(UNAME),Darwin)
 EMACS ?= ~/Applications/Emacs.app/Contents/MacOS/Emacs
 endif
 EMACS ?= emacs
@@ -23,6 +25,14 @@ byte-compile: init.elc early-init.elc
 	@echo Generating $@ from $<
 	@$(EMACS_BATCH) --eval "(progn (require 'ob-tangle) (org-babel-tangle-file \"$<\" \"$@\" \"emacs-lisp\"))"
 	@chmod ugo-w $@
+
+.PHONY: deps
+deps:
+ifeq ($(UNAME),Darwin)
+	brew install cmake libtool
+else
+	sudo apt-get install -y cmake libtool libtool-bin
+endif
 
 .PHONY: link
 link:
