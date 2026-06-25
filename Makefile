@@ -3,7 +3,7 @@
 UNAME := $(shell uname)
 
 ifeq ($(UNAME),Darwin)
-EMACS ?= ~/Applications/Emacs.app/Contents/MacOS/Emacs
+EMACS ?= /Applications/Emacs.app/Contents/MacOS/Emacs
 endif
 EMACS ?= emacs
 EMACS_BATCH = "$(EMACS)" -Q --batch
