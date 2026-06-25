@@ -1241,13 +1241,15 @@ GripはGitHubのAPIを呼ぶ
     :after magit)
 #+end_src
 
-** git-gutter
+** diff-hl
 
 #+begin_src emacs-lisp
-  (use-package git-gutter
-    :diminish git-gutter-mode
+  (use-package diff-hl
     :custom
-    (global-git-gutter-mode t))
+    (global-diff-hl-mode t)
+    :hook
+    ((magit-pre-refresh . diff-hl-magit-pre-refresh)
+     (magit-post-refresh . diff-hl-magit-post-refresh)))
 #+end_src
 
 ** blamer
