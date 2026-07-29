@@ -156,20 +156,6 @@
     )
 #+end_src
 
-*** asdf
-
-#+begin_src emacs-lisp
-  (use-package asdf
-    :vc (:url "https://github.com/tabfugnic/asdf.el" :rev :newest)
-    :hook
-    (after-init . asdf-enable)
-    :config
-    (exec-path-from-shell-copy-envs '("ASDF_DATA_DIR" "ASDF_CONFIG_FILE"))
-    :custom
-    (asdf-path (expand-file-name "~/.local/share/asdf/"))
-    (asdf-binary (or (executable-find "asdf") "asdf")))
-#+end_src
-
 ** startup
 
 #+begin_src emacs-lisp
